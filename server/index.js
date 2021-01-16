@@ -10,6 +10,7 @@ const passport = require("passport");
 const threadRouter = require("./routes/thread.js");
 const usersRouter = require("./routes/users.js");
 const authRouter = require("./routes/auth");
+const contributionRouter = require("./routes/contribution")
 
 // import models
 const UserModel = require("./models/User");
@@ -51,6 +52,7 @@ const port = process.env.PORT || 5000;
 // routers
 app.use("/api/users", usersRouter);
 app.use("/api/thread", threadRouter);
+app.use("/api/contribution", contributionRouter);
 app.use("/auth", authRouter);
 
 app.listen(port, () => {
