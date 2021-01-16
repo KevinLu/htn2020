@@ -5,13 +5,12 @@ const cors = require('cors')
 
 const bodyParser = require("body-parser");
 
+const threadRouter = require('./routes/thread.js')
+const usersRouter = require('./routes/users.js')
+
 app.use(cors());
 
-//to not get any deprecation warning or error
-//support parsing of application/x-www-form-urlencoded post data
 app.use(bodyParser.urlencoded({ extended: true }));
-//to get json data
-// support parsing of application/json type post data
 app.use(bodyParser.json());
 
 // Serve static assets if in production
@@ -28,6 +27,10 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const port = process.env.PORT || 5000
+
+// routers
+app.use('/api/users', usersRouter)
+app.use('/api/thread', threadRouter)
 
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`)
