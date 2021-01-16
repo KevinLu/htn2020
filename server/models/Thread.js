@@ -1,12 +1,13 @@
 const Sequelize = require("sequelize");
 const UserModel = require("./User");
 const sequelize = require("../services/database");
+const {v4: uuidv4} = require("uuid");
 
 var Thread = sequelize.define("threads", {
   uuid: {
     type: Sequelize.UUID,
     primaryKey: true,
-    defaultValue: Sequelize.UUIDV4,
+    defaultValue: uuidv4(),
   },
   user_id: {
     type: Sequelize.UUID,
