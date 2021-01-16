@@ -1,9 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const dropbase = require("../services/dropbase");
+const fs = require("fs");
+const axios = require("axios");
+
 const User = require("../models/User");
 const Thread = require("../models/Thread");
 const Comment = require("../models/Comment");
+const Contribution = require("../models/Contribution");
 
 router.get("/:threadId", (req, res) => {
   const threadId = req.params.threadId;
@@ -25,6 +29,18 @@ router.post("/upload", async (req, res) => {
   const jobId = await dropbase.runPipelineUrl(token, fileUrl); // This calls the api to upload fileUrl to pipeline token
   res.json(jobId); // return the jobId
 });
+
+router.get("/:id/contributions", (req, res) => {
+    const threadId = req.params.id;
+  
+    Thread.findByPk(threadId).then((thread, err) => {
+      if (thread) {
+        res.json(thread.contributions);
+      } else {
+        res.send("Thread not found. Error: " + JSON.stringify(err));
+      }
+    });
+  });
 
 router.get("/:id/comments", (req, res) => {
   const threadId = req.params.id;
@@ -66,6 +82,47 @@ router.post("/:id/comments", async (req, res) => {
 
   res.send(finalThread);
 });
+
+router.post("/:id/contributions", async (req, res) => {
+    const threadId = req.params.id;
+  
+    const userId = req.body.user;
+    const description = req.body.description;
+    const file = req.body.file;
+
+    var fileSize = 0;
+    try {
+        const response = await axios.head(file);
+        fileSize = response.headers["content-length"];
+    } catch (e) {
+        console.log(e)
+    }
+
+    var mainThread = await Thread.findByPk(threadId);
+  
+    var contribObj = await Contribution.create({
+      user: userId,
+      description: description,
+      file: file,
+      fileSize: fileSize
+    });
+    const uuid = contribObj.uuid;
+  
+    var contribArr;
+  
+    if (mainThread.contributions != null) {
+      contribArr = [...mainThread.contributions];
+      contribArr.push(uuid);
+    } else {
+      contribArr = [uuid];
+    }
+  
+    mainThread.contributions = contribArr;
+  
+    const finalThread = await mainThread.save();
+  
+    res.send(finalThread);
+  });
 
 router.post("/new", async (req, res) => {
   const userId = req.body.user;

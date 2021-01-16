@@ -1,5 +1,5 @@
 const express = require('express')
-const router = require('router')
+const router = express.Router();
 const Contribution = require('../models/Contribution')
 
 router.get('/:contribution_id', async (req, res) => {
