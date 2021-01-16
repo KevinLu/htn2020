@@ -67,6 +67,21 @@ router.post("/:id/comments", async (req, res) => {
   res.send(finalThread);
 });
 
+router.get('/threads', async (req, res) => {
+  const offset = req.query.offset;
+  const limit = req.query.limit;
+  const threads = await Thread.findAll({
+    offset: offset,
+    limit: limit
+  });
+  
+  if (threads) {
+    return threads;
+  } else {
+    return "bad request";
+  }
+})
+
 router.post("/new", async (req, res) => {
   const userId = req.body.user;
   const title = req.body.title;
