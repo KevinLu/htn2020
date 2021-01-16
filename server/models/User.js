@@ -1,11 +1,10 @@
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
+const sequelize = require("../services/database");
 
-var User = function (sequelize) {
-  return sequelize.define("users", {
-    id: { type: Sequelize.INTEGER, primaryKey: true },
-    username: { type: Sequelize.STRING },
-    password: { type: Sequelize.STRING },
-  });
-};
+var User = sequelize.define("users", {
+  id: { type: Sequelize.INTEGER, primaryKey: true },
+  username: { type: Sequelize.STRING },
+  password: { type: Sequelize.STRING },
+});
 
 module.exports = User;

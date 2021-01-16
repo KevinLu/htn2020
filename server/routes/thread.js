@@ -5,7 +5,7 @@ const dropbase = require('../services/dropbase')
 router.get('/:threadId', (req, res) => {
     const threadId = req.params.threadId
     // respond with posts and data in the thread
-    res.send(threadId)
+    res.json(threadId)
 })
 
 router.post('/create/:name', (req, res) => {
@@ -16,7 +16,7 @@ router.post('/create/:name', (req, res) => {
     const token = null;
     const fileUrl = null;
     const jobId = dropbase.runPipelineToken(token, fileUrl); // This calls the api to upload fileUrl to pipeline token
-    res.send(jobId) // return the jobId
+    res.json(jobId) // return the jobId
 })
 
 module.exports = router
