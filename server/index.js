@@ -32,6 +32,10 @@ const port = process.env.PORT || 5000
 app.use('/api/users', usersRouter)
 app.use('/api/thread', threadRouter)
 
+// routers
+app.use('/api/users', usersRouter)
+app.use('/api/thread', threadRouter)
+
 app.listen(port, () => {
     console.log(`Server Listening on ${port}`)
 })
