@@ -7,7 +7,7 @@ var User = sequelize.define("comments", {
   uuid: {
     type: Sequelize.UUID,
     primaryKey: true,
-    defaultValue: uuidv4(),
+    defaultValue: () => uuidv4(),
   },
   user: {
     type: Sequelize.UUID,

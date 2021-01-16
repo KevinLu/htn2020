@@ -6,7 +6,7 @@ var User = sequelize.define("users", {
   uuid: {
     type: Sequelize.UUID,
     primaryKey: true,
-    defaultValue: uuidv4(),
+    defaultValue: () => uuidv4(),
   },
   username: { type: Sequelize.STRING },
   password: { type: Sequelize.STRING },

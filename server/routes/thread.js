@@ -3,6 +3,7 @@ const router = express.Router();
 const dropbase = require("../services/dropbase");
 const User = require("../models/User");
 const Thread = require("../models/Thread");
+const Comment = require("../models/Comment");
 
 router.get("/:threadId", (req, res) => {
   const threadId = req.params.threadId;
@@ -35,6 +36,35 @@ router.get("/:id/comments", (req, res) => {
       res.send("Thread not found. Error: " + JSON.stringify(err));
     }
   });
+});
+
+router.post("/:id/comments", async (req, res) => {
+  const threadId = req.params.id;
+
+  const userId = req.body.user;
+  const comment = req.body.comment;
+  var mainThread = await Thread.findByPk(threadId);
+
+  var commentObj = await Comment.create({
+    user: userId,
+    comment: comment,
+  });
+  const uuid = commentObj.uuid;
+
+  var commentsArr;
+
+  if (mainThread.comments != null) {
+    commentsArr = [...mainThread.comments];
+    commentsArr.push(uuid);
+  } else {
+    commentsArr = [uuid];
+  }
+
+  mainThread.comments = commentsArr;
+
+  const finalThread = await mainThread.save();
+
+  res.send(finalThread);
 });
 
 router.post("/new", async (req, res) => {

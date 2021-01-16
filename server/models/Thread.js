@@ -9,7 +9,7 @@ var Thread = sequelize.define("threads", {
   uuid: {
     type: Sequelize.UUID,
     primaryKey: true,
-    defaultValue: uuidv4(),
+    defaultValue: () => uuidv4(),
   },
   threadUrl: {
     type: Sequelize.STRING
