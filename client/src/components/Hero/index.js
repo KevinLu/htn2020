@@ -9,8 +9,8 @@ function Hero() {
       justifyContent="center"
       alignItems="center"
       textAlign="center"
-      maxW="110ch"
-      mt={32}
+      maxW="130ch"
+      mt={16}
       mb={16}>
       <Heading
         as="h1"

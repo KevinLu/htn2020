@@ -8,7 +8,7 @@ function CommentList() {
     <Container
       p={6}
       backgroundColor="white"
-      maxWidth="120ch"
+      maxWidth="130ch"
       borderWidth="1px"
       borderRadius="lg">
       <HStack justify="space-between">

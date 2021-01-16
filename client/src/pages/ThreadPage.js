@@ -26,7 +26,7 @@ function ThreadPage(props) {
         p={6}
         mb={2}
         backgroundColor="white"
-        maxWidth="120ch"
+        maxWidth="130ch"
         borderWidth="1px"
         borderRadius="lg">
         <Heading as="h4" size="lg" mb={2}>

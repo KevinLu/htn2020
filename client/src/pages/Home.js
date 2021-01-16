@@ -7,7 +7,7 @@ function Home() {
   return (
     <div>
       <Hero />
-      <Container maxWidth="100ch">
+      <Container maxWidth="130ch">
         <ThreadList />
       </Container>
     </div>
