@@ -12,6 +12,10 @@ router.post('/create/:name', (req, res) => {
     const name = req.params.name
     // TODO: create a thread in the database
 
+    res.send(name);
+})
+
+router.post('/upload', (req, res) => {
     // TODO: get token and fileUrl (how?)
     const token = null;
     const fileUrl = null;
