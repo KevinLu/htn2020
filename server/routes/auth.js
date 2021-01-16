@@ -1,26 +1,45 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
+const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
-/*
- * todo i think we use passport.js or something for auth strategy.
- *  then we can also implement fb oauth easily.
- * */
+router.post('/login', function (req, res, next) {
+  passport.authenticate('local', function (err, user) {
+    if (err) {
+      return next(err);
+    }
 
-router.post("/login", (req, res) => {
-  var username = req.params.username;
-  var password = req.params.password;
+    if (!user) {
+      return res.status(401).json({message: "user not found!"});
+    }
 
-  res.send(username);
+    req.logIn(user, function (err) {
+      if (err) {
+        return res.status(401).json({message: "invalid password!"})
+      }
+
+      return res.status(200).json(user);
+    });
+  })(req, res, next);
 });
 
-router.post("/signup", async (req, res) => {
-  var username = req.params.username;
-  var password = req.params.password;
-
-  const user = User.create();
-
-  res.send(user);
+router.post('/logout', (req, res) => {
+  req.logout();
 });
+
+const saltRounds = 10
+
+router.post('/register', (req, res) => {
+  const salt = bcrypt.genSaltSync(saltRounds)
+  const hashedPassword = bcrypt.hashSync(req.params.password, salt)
+
+  User.create({
+    username: req.params.username,
+    password: hashedPassword
+  })
+  .then(res.status(200).send())
+  .catch(err => res.status(400).json(err));
+})
 
 module.exports = router;

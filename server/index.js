@@ -1,4 +1,6 @@
 const express = require("express");
+const cookieSession = require("cookie-session");
+
 const app = express();
 const path = require("path");
 const cors = require("cors");
@@ -16,8 +18,18 @@ const UserModel = require("./models/User");
 const ThreadModel = require("./models/Thread");
 
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(cookieSession({
+  keys: ['secret key'],
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./auth/setup_passport')
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
@@ -34,6 +46,7 @@ if (process.env.NODE_ENV === "production") {
 UserModel.sync().then(() => {
   console.log(`User table created!`);
 });
+
 ThreadModel.sync().then(() => {
   console.log(`Thread table created!`);
 });
@@ -43,7 +56,10 @@ const port = process.env.PORT || 5000;
 // routers
 app.use("/api/users", usersRouter);
 app.use("/api/thread", threadRouter);
-app.use("/auth", authRouter);
+app.use("/api/auth", authRouter);
+
+// use passport.authMiddleware() to restrict access to pages where you need to be authenticated
+// eg app.get('/api/create/thread/', passport.authMiddleware(), callback);
 
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`);
