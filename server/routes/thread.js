@@ -13,7 +13,8 @@ router.post('/create/:name', (req, res) => {
     // TODO: create a thread in the database
 
     // TODO: get token and fileUrl (how?)
-    const token, fileUrl;
+    const token = null;
+    const fileUrl = null;
     const jobId = dropbase.runPipelineToken(token, fileUrl); // This calls the api to upload fileUrl to pipeline token
     res.send(jobId) // return the jobId
 })
