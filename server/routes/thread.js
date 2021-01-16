@@ -22,14 +22,6 @@ router.post("/create/:name", (req, res) => {
   res.send(name);
 });
 
-router.post("/upload", async (req, res) => {
-  // TODO: get token and fileUrl (how?)
-  const token = null;
-  const fileUrl = null;
-  const jobId = await dropbase.runPipelineUrl(token, fileUrl); // This calls the api to upload fileUrl to pipeline token
-  res.json(jobId); // return the jobId
-});
-
 router.get("/:id/contributions", (req, res) => {
   const threadId = req.params.id;
 
@@ -99,6 +91,10 @@ router.post("/:id/contributions", async (req, res) => {
   }
 
   var mainThread = await Thread.findByPk(threadId);
+
+  // Sending to dropbase pipeline
+  const pipelineToken = mainThread.dropbaseApi;
+  await dropbase.runPipelineUrl(pipelineToken, file);
 
   var contribObj = await Contribution.create({
     user: userId,
