@@ -13,6 +13,7 @@ function NavBar({children}) {
         justify="space-between"
         wrap="wrap"
         p={4}
+        backgroundColor="white"
       >
         <Container maxW="130ch" d="flex" justifyContent="space-between">
           <LeftMenu />

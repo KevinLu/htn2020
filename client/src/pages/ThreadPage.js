@@ -6,7 +6,10 @@ import CommentList from '../components/CommentList';
 
 function ThreadPage(props) {
   useEffect(() => {
-    document.body.style.backgroundColor = "#F7FAFC";
+    document.body.style.backgroundColor = "#EDF2F7";
+    return (() => {
+      document.body.style.backgroundColor = "#fff";
+    });
   }, []);
   const data = {
     username: "Some Scientist",
@@ -21,7 +24,7 @@ function ThreadPage(props) {
     vote: "up",
   }
   return (
-    <Box>
+    <Box mt={2}>
       <Container
         p={6}
         mb={2}

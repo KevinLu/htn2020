@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 
 function MiddleMenu() {
   return (
-    <Flex align="center">
+    <Flex align="center" d={{base: 'none', lg: 'flex'}}>
       <HStack spacing={16}>
         <Text color="gray.600" fontSize="lg">
           <Link to="/">Threads</Link>

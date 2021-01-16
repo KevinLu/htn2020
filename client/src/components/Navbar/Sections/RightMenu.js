@@ -8,8 +8,16 @@ function RightMenu(props) {
   return (
     <Flex alignItems="center">
       <ButtonGroup>
-        <Button variant="ghost">Sign in</Button>
-        <Button colorScheme="purple" bgColor="black" color="white" rightIcon={<ArrowForwardIcon />}>Sign up</Button>
+      <Link to="/login"><Button variant="ghost">Sign in</Button></Link>
+        <Link to="/register">
+          <Button
+            colorScheme="purple"
+            bgColor="black"
+            color="white"
+            rightIcon={<ArrowForwardIcon />}>
+            Sign up
+          </Button>
+        </Link>
       </ButtonGroup>
     </Flex>
   );
