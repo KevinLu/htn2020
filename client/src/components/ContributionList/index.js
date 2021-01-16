@@ -1,10 +1,12 @@
 import React from 'react';
-import {Box, Flex, Heading, Text, Button, Container, VStack, HStack, AvatarGroup, Avatar} from '@chakra-ui/react';
+import {Text, Button, Container, VStack, HStack, AvatarGroup, Avatar} from '@chakra-ui/react';
 import Contribution from '../Contribution';
 
-function ContributionList() {
+function ContributionList(props) {
+  const {mb} = props;
   return (
     <Container
+      mb={mb}
       p={6}
       backgroundColor="white"
       maxWidth="120ch"

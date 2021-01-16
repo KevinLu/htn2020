@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Box, Flex, Heading, Text, Button, Container, HStack} from '@chakra-ui/react';
 import {ChatIcon, StarIcon} from '@chakra-ui/icons';
 import ContributionList from '../components/ContributionList';
+import CommentList from '../components/CommentList';
 
 function ThreadPage(props) {
+  useEffect(() => {
+    document.body.style.backgroundColor = "#F7FAFC";
+  }, []);
   const data = {
     threadUrl: "the-thread-url",
     title: "Need custom datasets for research purposes",
@@ -15,7 +19,7 @@ function ThreadPage(props) {
     vote: "up",
   }
   return (
-    <Box backgroundColor="gray.100" h="100vh" p={2}>
+    <Box p={2}>
       <Container
         p={6}
         mb={2}
@@ -44,7 +48,8 @@ function ThreadPage(props) {
           </Flex>
         </HStack>
       </Container>
-      <ContributionList />
+      <ContributionList mb={2} />
+      <CommentList />
     </Box>
   );
 }
