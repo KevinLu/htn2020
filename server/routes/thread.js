@@ -15,11 +15,11 @@ router.post('/create/:name', (req, res) => {
     res.send(name);
 })
 
-router.post('/upload', (req, res) => {
+router.post('/upload', async (req, res) => {
     // TODO: get token and fileUrl (how?)
     const token = null;
     const fileUrl = null;
-    const jobId = dropbase.runPipelineToken(token, fileUrl); // This calls the api to upload fileUrl to pipeline token
+    const jobId = await dropbase.runPipelineUrl(token, fileUrl); // This calls the api to upload fileUrl to pipeline token
     res.json(jobId) // return the jobId
 })
 
