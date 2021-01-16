@@ -8,6 +8,7 @@ const sequelize = require("./services/database");
 
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const passportSetup = require('./auth/setup_passport');
 
 const threadRouter = require("./routes/thread.js");
 const usersRouter = require("./routes/users.js");
@@ -28,8 +29,6 @@ app.use(cookieSession({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-require('./auth/setup_passport')
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
