@@ -93,7 +93,7 @@ function Login(props) {
               boxShadow="0px 4px 25px rgba(0, 0, 0, 0.13)"
             >
               <Heading as="h1" size="xl" textAlign="center">
-                Login
+                Sign in
               </Heading>
               <form onSubmit={props.handleSubmit}>
                 <Field name="email">

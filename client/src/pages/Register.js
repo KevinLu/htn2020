@@ -75,7 +75,7 @@ function Register() {
               boxShadow="0px 4px 25px rgba(0, 0, 0, 0.13)"
             >
               <Heading as="h1" size="xl" textAlign="center">
-                Register
+                Sign up
               </Heading>
               <form onSubmit={props.handleSubmit}>
                 <Field name="name">
