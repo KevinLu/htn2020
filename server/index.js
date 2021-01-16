@@ -13,6 +13,7 @@ const usersRouter = require("./routes/users.js");
 
 // import models
 const UserModel = require("./models/User");
+const ThreadModel = require("./models/Thread");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -46,36 +47,7 @@ var sequelize = new Sequelize('nice-puma-270.defaultdb', 'kevin', 'K4OJov8KbV3cl
 
 // Add all database objects from models here
 const User = UserModel(sequelize);
-
-sequelize.sync({ force: true }).then(() => {
-  console.log(`Database & tables created!`);
-});
-
-// Add all database objects from models here
-const User = UserModel(sequelize);
-
-sequelize.sync({ force: true }).then(() => {
-  console.log(`Database & tables created!`);
-});
-
-const port = process.env.PORT || 5000;
-
-// Connect to CockroachDB through Sequelize.
-var sequelize = new Sequelize('nice-puma-270.defaultdb', 'kevin', 'K4OJov8KbV3clDKY', {
-  host: 'free-tier.gcp-us-central1.cockroachlabs.cloud',
-  dialect: 'postgres',
-  port: 26257,
-  logging: false,
-  dialectOptions: {
-      ssl: {
-          ca: fs.readFileSync('C:/cc-ca.crt.txt')
-              .toString()
-      }
-  }
-});
-
-// Add all database objects from models here
-const User = UserModel(sequelize);
+const Thread = ThreadModel(sequelize);
 
 sequelize.sync({ force: true }).then(() => {
   console.log(`Database & tables created!`);
