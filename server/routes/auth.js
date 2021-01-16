@@ -18,11 +18,7 @@ router.post("/signup", async (req, res) => {
   var username = req.params.username;
   var password = req.params.password;
 
-  const user = User.create({
-    id: 6,
-    username: username,
-    password: password,
-  });
+  const user = User.create();
 
   res.send(user);
 });
