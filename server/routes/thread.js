@@ -1,16 +1,26 @@
 const express = require('express')
 const router = express.Router()
+const dropbase = require('../services/dropbase')
 
 router.get('/:threadId', (req, res) => {
     const threadId = req.params.threadId
     // respond with posts and data in the thread
-    res.send(threadId)
+    res.json(threadId)
 })
 
 router.post('/create/:name', (req, res) => {
     const name = req.params.name
-    // create a thread in the database
-    res.send(name)
+    // TODO: create a thread in the database
+
+    res.send(name);
+})
+
+router.post('/upload', async (req, res) => {
+    // TODO: get token and fileUrl (how?)
+    const token = null;
+    const fileUrl = null;
+    const jobId = await dropbase.runPipelineUrl(token, fileUrl); // This calls the api to upload fileUrl to pipeline token
+    res.json(jobId) // return the jobId
 })
 
 module.exports = router
