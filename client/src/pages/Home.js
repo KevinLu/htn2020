@@ -1,9 +1,13 @@
 import React from 'react';
+import {Container} from "@chakra-ui/react"
+import ThreadList from '../components/ThreadList';
 
 function Home() {
   return (
     <div>
-      home page
+      <Container maxWidth="100ch">
+        <ThreadList />
+      </Container>
     </div>
   );
 }
