@@ -1,10 +1,12 @@
-const express = require('express')
-const app = express()
-const path = require('path')
-const cors = require('cors')
+const express = require("express");
+const app = express();
+const path = require("path");
+const cors = require("cors");
+var Sequelize = require("sequelize-cockroachdb");
+var fs = require("fs");
 
-const bodyParser = require('body-parser')
-const passport = require('passport')
+const bodyParser = require("body-parser");
+const passport = require("passport");
 
 const threadRouter = require("./routes/thread.js");
 const usersRouter = require("./routes/users.js");
@@ -28,7 +30,35 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const port = process.env.PORT || 5000
+// Connect to CockroachDB through Sequelize.
+var sequelize = new Sequelize('nice-puma-270.defaultdb', 'kevin', 'K4OJov8KbV3clDKY', {
+  host: 'free-tier.gcp-us-central1.cockroachlabs.cloud',
+  dialect: 'postgres',
+  port: 26257,
+  logging: false,
+  dialectOptions: {
+      ssl: {
+          ca: fs.readFileSync('C:/cc-ca.crt.txt')
+              .toString()
+      }
+  }
+});
+
+// Add all database objects from models here
+const User = UserModel(sequelize);
+
+sequelize.sync({ force: true }).then(() => {
+  console.log(`Database & tables created!`);
+});
+
+// Add all database objects from models here
+const User = UserModel(sequelize);
+
+sequelize.sync({ force: true }).then(() => {
+  console.log(`Database & tables created!`);
+});
+
+const port = process.env.PORT || 5000;
 
 // Connect to CockroachDB through Sequelize.
 var sequelize = new Sequelize('nice-puma-270.defaultdb', 'kevin', 'K4OJov8KbV3clDKY', {
