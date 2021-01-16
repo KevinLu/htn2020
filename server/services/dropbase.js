@@ -11,7 +11,22 @@ const getUrlAndId = async (token) => {
     } else {
         return "bad request";
     }
-    
 }
 
-module.exports = {getUrlAndId};
+// Takes in the pipeline token and uploads fileUrl to the token
+const runPipelineToken = async (token, fileUrl) => {
+    const url = 'https://api2.dropbase.io/v1/pipeline/run_pipeline';
+    const data = {
+        "token": token,
+        "fileUrl": fileUrl
+    };
+    const response = await axios.post(url, data);
+
+    if (response.status == 200) {
+        return response.data;
+    } else {
+        return "bad request";
+    }
+}
+
+module.exports = {getUrlAndId, runPipelineToken};
