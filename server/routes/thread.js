@@ -9,19 +9,6 @@ const Thread = require("../models/Thread");
 const Comment = require("../models/Comment");
 const Contribution = require("../models/Contribution");
 
-router.get("/:threadId", (req, res) => {
-  const threadId = req.params.threadId;
-  // respond with posts and data in the thread
-  res.json(threadId);
-});
-
-router.post("/create/:name", (req, res) => {
-  const name = req.params.name;
-  // TODO: create a thread in the database
-
-  res.send(name);
-});
-
 router.get("/:id/contributions", (req, res) => {
   const threadId = req.params.id;
 
