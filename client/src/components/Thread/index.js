@@ -1,8 +1,16 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {Box, HStack, Badge, Flex} from '@chakra-ui/react';
+import styled from '@emotion/styled';
 import {ChatIcon, StarIcon} from '@chakra-ui/icons';
 import RatingBox from '../RatingBox';
+
+const HoverEffect = styled.div`
+&:hover {
+  background-color: #EDF2F7;
+  transition: 0.2s ease-out;
+}
+`;
 
 function Thread(props) {
   // const {data} = props;
@@ -18,59 +26,61 @@ function Thread(props) {
   }
 
   return (
-    <HStack w="100%" borderWidth="1px" borderRadius="lg" overflow="hidden" spacing="0">
-      <Box pl="4">
-        <RatingBox rating={data.rating} vote={data.vote} />
-      </Box>
-      <Link to={`/thread/${data.threadUrl}`}>
-        <Box p="4">
-          <Box d="flex" alignItems="baseline">
-            <Badge borderRadius="full" px="2" colorScheme="blue">
-              New
+    <HoverEffect>
+      <HStack w="100%" borderWidth="1px" borderRadius="lg" overflow="hidden" spacing="0">
+        <Box pl="4">
+          <RatingBox rating={data.rating} vote={data.vote} />
+        </Box>
+        <Link to={`/thread/${data.threadUrl}`}>
+          <Box p="4">
+            <Box d="flex" alignItems="baseline">
+              <Badge borderRadius="full" px="2" colorScheme="blue">
+                New
           </Badge>
+              <Box
+                color="gray.500"
+                fontWeight="semibold"
+                letterSpacing="wide"
+                fontSize="xs"
+                textTransform="uppercase"
+                ml="2"
+              >
+                {data.timeSincePosted} ago
+        </Box>
+            </Box>
+
             <Box
-              color="gray.500"
+              mt="1"
               fontWeight="semibold"
-              letterSpacing="wide"
-              fontSize="xs"
-              textTransform="uppercase"
-              ml="2"
+              as="h4"
+              lineHeight="tight"
+              isTruncated
             >
-              {data.timeSincePosted} ago
-        </Box>
-          </Box>
+              {data.title}
+            </Box>
 
-          <Box
-            mt="1"
-            fontWeight="semibold"
-            as="h4"
-            lineHeight="tight"
-            isTruncated
-          >
-            {data.title}
-          </Box>
+            <Box color="gray.600" fontSize="sm">
+              {data.description}
+            </Box>
 
-          <Box color="gray.600" fontSize="sm">
-            {data.description}
+            <HStack mt="3" spacing={4}>
+              <Flex alignItems="center">
+                <StarIcon color={"purple.500"} />
+                <Box as="span" ml="2" color="gray.600" fontSize="sm">
+                  {data.contributionCount} contributions
           </Box>
-
-          <HStack mt="3" spacing={4}>
-            <Flex alignItems="center">
-              <StarIcon color={"purple.500"} />
-              <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                {data.contributionCount} contributions
+              </Flex>
+              <Flex alignItems="center">
+                <ChatIcon color={"purple.500"} />
+                <Box as="span" ml="2" color="gray.600" fontSize="sm">
+                  {data.commentCount} comments
           </Box>
-            </Flex>
-            <Flex alignItems="center">
-              <ChatIcon color={"purple.500"} />
-              <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                {data.commentCount} comments
+              </Flex>
+            </HStack>
           </Box>
-            </Flex>
-          </HStack>
-        </Box>
-      </Link>
-    </HStack>
+        </Link>
+      </HStack>
+    </HoverEffect>
   );
 }
 
