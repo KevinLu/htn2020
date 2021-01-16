@@ -17,7 +17,7 @@ function Thread(props) {
   const data = {
     threadUrl: "the-thread-url",
     title: "Need custom datasets for research purposes",
-    timeSincePosted: "5 hours",
+    timeSince: "5 hours",
     description: "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.",
     commentCount: 34,
     contributionCount: 16,
@@ -45,7 +45,7 @@ function Thread(props) {
                 textTransform="uppercase"
                 ml="2"
               >
-                {data.timeSincePosted} ago
+                {data.timeSince} ago
         </Box>
             </Box>
 
