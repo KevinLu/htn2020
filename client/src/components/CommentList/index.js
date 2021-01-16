@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, Button, Container, VStack, HStack} from '@chakra-ui/react';
+import {Text, Container, VStack, HStack} from '@chakra-ui/react';
 import Comment from '../Comment';
 import CommentBox from '../CommentBox';
 

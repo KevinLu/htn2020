@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Box, Flex, Heading, Text, Button, Container, HStack} from '@chakra-ui/react';
+import {Box, Flex, Heading, Text, Avatar, Container, HStack} from '@chakra-ui/react';
 import {ChatIcon, StarIcon} from '@chakra-ui/icons';
 import ContributionList from '../components/ContributionList';
 import CommentList from '../components/CommentList';
@@ -9,6 +9,8 @@ function ThreadPage(props) {
     document.body.style.backgroundColor = "#F7FAFC";
   }, []);
   const data = {
+    username: "Some Scientist",
+    avatar: "https://bit.ly/dan-abramov",
     threadUrl: "the-thread-url",
     title: "Need custom datasets for research purposes",
     timeSince: "5 hours",
@@ -19,7 +21,7 @@ function ThreadPage(props) {
     vote: "up",
   }
   return (
-    <Box p={2}>
+    <Box>
       <Container
         p={6}
         mb={2}
@@ -27,9 +29,16 @@ function ThreadPage(props) {
         maxWidth="120ch"
         borderWidth="1px"
         borderRadius="lg">
-        <Heading as="h4" size="lg" mt={2} mb={4}>
+        <Heading as="h4" size="lg" mb={2}>
           {data.title}
         </Heading>
+        <Flex alignItems="center" mb={2}>
+          <Avatar size="sm" name={data.username} src={data.avatar} />
+          <Text fontWeight="semibold" ml="2">{data.username}</Text>
+          <Text color="gray.500" ml="2">
+            posted {data.timeSince} ago
+          </Text>
+        </Flex>
         <Text>
           {data.description}
         </Text>
