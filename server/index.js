@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const cors = require('cors')
+const cors = require("cors");
+var Sequelize = require("sequelize-cockroachdb");
+var fs = require("fs");
 
 const bodyParser = require("body-parser");
 
@@ -16,8 +18,7 @@ app.use(bodyParser.json());
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
-
-  // Set static folder   
+  // Set static folder
   // All the javascript and css files will be read and served from this folder
   app.use(express.static(path.join(__dirname, "../client/build")));
 
@@ -27,8 +28,15 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const port = process.env.PORT || 5000
+// Connect to CockroachDB through Sequelize.
+var sequelize = new Sequelize("database", "maxroach", "", {
+  dialect: "postgres",
+  port: 26257,
+  logging: false,
+});
+
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
-  console.log(`Server Listening on ${port}`)
+  console.log(`Server Listening on ${port}`);
 });
