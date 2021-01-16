@@ -14,6 +14,8 @@ const authRouter = require("./routes/auth");
 // import models
 const UserModel = require("./models/User");
 const ThreadModel = require("./models/Thread");
+const CommentModel = require("./models/Comment");
+const ContributionModel = require("./models/Contribution");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,6 +38,12 @@ UserModel.sync().then(() => {
 });
 ThreadModel.sync().then(() => {
   console.log(`Thread table created!`);
+});
+CommentModel.sync().then(() => {
+  console.log(`Comment table created!`);
+});
+ContributionModel.sync().then(() => {
+  console.log(`Contribution table created!`);
 });
 
 const port = process.env.PORT || 5000;

@@ -15,12 +15,14 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
-  var username = req.params.username;
-  var password = req.params.password;
+  var username = req.body["username"];
+  var password = req.body["password"];
+
+  console.log(username, password)
 
   const user = User.create({
-    "username": "sam",
-    "password": "test1234",
+    "username": username,
+    "password": password
   });
 
   res.send(user);
