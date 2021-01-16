@@ -31,16 +31,16 @@ router.post("/upload", async (req, res) => {
 });
 
 router.get("/:id/contributions", (req, res) => {
-    const threadId = req.params.id;
-  
-    Thread.findByPk(threadId).then((thread, err) => {
-      if (thread) {
-        res.json(thread.contributions);
-      } else {
-        res.send("Thread not found. Error: " + JSON.stringify(err));
-      }
-    });
+  const threadId = req.params.id;
+
+  Thread.findByPk(threadId).then((thread, err) => {
+    if (thread) {
+      res.json(thread.contributions);
+    } else {
+      res.send("Thread not found. Error: " + JSON.stringify(err));
+    }
   });
+});
 
 router.get("/:id/comments", (req, res) => {
   const threadId = req.params.id;
@@ -84,45 +84,60 @@ router.post("/:id/comments", async (req, res) => {
 });
 
 router.post("/:id/contributions", async (req, res) => {
-    const threadId = req.params.id;
-  
-    const userId = req.body.user;
-    const description = req.body.description;
-    const file = req.body.file;
+  const threadId = req.params.id;
 
-    var fileSize = 0;
-    try {
-        const response = await axios.head(file);
-        fileSize = response.headers["content-length"];
-    } catch (e) {
-        console.log(e)
-    }
+  const userId = req.body.user;
+  const description = req.body.description;
+  const file = req.body.file;
 
-    var mainThread = await Thread.findByPk(threadId);
-  
-    var contribObj = await Contribution.create({
-      user: userId,
-      description: description,
-      file: file,
-      fileSize: fileSize
-    });
-    const uuid = contribObj.uuid;
-  
-    var contribArr;
-  
-    if (mainThread.contributions != null) {
-      contribArr = [...mainThread.contributions];
-      contribArr.push(uuid);
-    } else {
-      contribArr = [uuid];
-    }
-  
-    mainThread.contributions = contribArr;
-  
-    const finalThread = await mainThread.save();
-  
-    res.send(finalThread);
+  var fileSize = 0;
+  try {
+    const response = await axios.head(file);
+    fileSize = response.headers["content-length"];
+  } catch (e) {
+    console.log(e);
+  }
+
+  var mainThread = await Thread.findByPk(threadId);
+
+  var contribObj = await Contribution.create({
+    user: userId,
+    description: description,
+    file: file,
+    fileSize: fileSize,
   });
+  const uuid = contribObj.uuid;
+
+  var contribArr;
+
+  if (mainThread.contributions != null) {
+    contribArr = [...mainThread.contributions];
+    contribArr.push(uuid);
+  } else {
+    contribArr = [uuid];
+  }
+
+  mainThread.contributions = contribArr;
+
+  const finalThread = await mainThread.save();
+
+  res.send(finalThread);
+});
+
+router.get("/threads", async (req, res) => {
+  const offset = req.query.offset;
+  const limit = req.query.limit;
+  const threads = await Thread.findAll({
+    offset: offset,
+    limit: limit,
+  });
+
+  if (threads) {
+    return threads;
+  } else {
+    return "bad request";
+  }
+});
 
 router.post("/new", async (req, res) => {
   const userId = req.body.user;
