@@ -31,54 +31,56 @@ function Thread(props) {
         <Box pl="4">
           <RatingBox rating={data.rating} vote={data.vote} />
         </Box>
-        <Link to={`/thread/${data.threadUrl}`}>
-          <Box p="4">
-            <Box d="flex" alignItems="baseline">
-              <Badge borderRadius="full" px="2" colorScheme="blue">
-                New
-          </Badge>
+        <Box p={4}>
+          <Link to={`/thread/${data.threadUrl}`}>
+            <Box>
+              <Box d="flex" alignItems="baseline">
+                <Badge borderRadius="full" px="2" colorScheme="blue">
+                  New
+                </Badge>
+                <Box
+                  color="gray.500"
+                  fontWeight="semibold"
+                  letterSpacing="wide"
+                  fontSize="xs"
+                  textTransform="uppercase"
+                  ml="2"
+                >
+                  {data.timeSince} ago
+                </Box>
+              </Box>
+
               <Box
-                color="gray.500"
+                mt="1"
                 fontWeight="semibold"
-                letterSpacing="wide"
-                fontSize="xs"
-                textTransform="uppercase"
-                ml="2"
+                as="h4"
+                lineHeight="tight"
+                isTruncated
               >
-                {data.timeSince} ago
+                {data.title}
+              </Box>
+
+              <Box color="gray.600" fontSize="sm">
+                {data.description}
+              </Box>
+
+              <HStack mt="3" spacing={4}>
+                <Flex alignItems="center">
+                  <StarIcon color={"purple.500"} />
+                  <Box as="span" ml="2" color="gray.600" fontSize="sm">
+                    {data.contributionCount} contributions
+                  </Box>
+                </Flex>
+                <Flex alignItems="center">
+                  <ChatIcon color={"purple.500"} />
+                  <Box as="span" ml="2" color="gray.600" fontSize="sm">
+                    {data.commentCount} comments
+                  </Box>
+                </Flex>
+              </HStack>
+            </Box>
+          </Link>
         </Box>
-            </Box>
-
-            <Box
-              mt="1"
-              fontWeight="semibold"
-              as="h4"
-              lineHeight="tight"
-              isTruncated
-            >
-              {data.title}
-            </Box>
-
-            <Box color="gray.600" fontSize="sm">
-              {data.description}
-            </Box>
-
-            <HStack mt="3" spacing={4}>
-              <Flex alignItems="center">
-                <StarIcon color={"purple.500"} />
-                <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                  {data.contributionCount} contributions
-          </Box>
-              </Flex>
-              <Flex alignItems="center">
-                <ChatIcon color={"purple.500"} />
-                <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                  {data.commentCount} comments
-          </Box>
-              </Flex>
-            </HStack>
-          </Box>
-        </Link>
       </HStack>
     </HoverEffect>
   );
