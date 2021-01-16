@@ -6,12 +6,15 @@ var Sequelize = require("sequelize-cockroachdb");
 var fs = require("fs");
 
 const bodyParser = require("body-parser");
+const passport = require("passport");
 
-const threadRouter = require('./routes/thread.js')
-const usersRouter = require('./routes/users.js')
+const threadRouter = require("./routes/thread.js");
+const usersRouter = require("./routes/users.js");
+
+// import models
+const UserModel = require("./models/User");
 
 app.use(cors());
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -34,11 +37,18 @@ var sequelize = new Sequelize("database", "maxroach", "", {
   logging: false,
 });
 
+// Add all database objects from models here
+const User = UserModel(sequelize);
+
+sequelize.sync({ force: true }).then(() => {
+  console.log(`Database & tables created!`);
+});
+
 const port = process.env.PORT || 5000;
 
 // routers
-app.use('/api/users', usersRouter)
-app.use('/api/thread', threadRouter)
+app.use("/api/users", usersRouter);
+app.use("/api/thread", threadRouter);
 
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`);
