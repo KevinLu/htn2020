@@ -53,7 +53,7 @@ router.get("/:id/comments", (req, res) => {
   const threadId = req.params.id;
 
   Thread.findByPk(threadId).then(async (thread, err) => {
-    if (thread) {
+    if (thread && thread.comments) {
       const comments = await Promise.all(thread.comments.map(commentId => Comment.findOne({where: {uuid: commentId}})))
 
       res.send(comments);
