@@ -49,7 +49,6 @@ router.post('/register', (req, res) => {
       return res.status(200).json({username: req.body.username});
     })
     .catch(err => {
-      console.log(err);
       if (err.name === "SequelizeUniqueConstraintError") {
         return(res.status(400).json({message: "username already exists!"}));
       }

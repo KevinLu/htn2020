@@ -13,10 +13,13 @@ const passportSetup = require('./auth/setup_passport');
 const threadRouter = require("./routes/thread.js");
 const usersRouter = require("./routes/users.js");
 const authRouter = require("./routes/auth");
+const contributionRouter = require("./routes/contribution")
 
 // import models
 const UserModel = require("./models/User");
 const ThreadModel = require("./models/Thread");
+const CommentModel = require("./models/Comment");
+const ContributionModel = require("./models/Contribution");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -49,16 +52,20 @@ UserModel.sync().then(() => {
 ThreadModel.sync().then(() => {
   console.log(`Thread table created!`);
 });
+CommentModel.sync().then(() => {
+  console.log(`Comment table created!`);
+});
+ContributionModel.sync().then(() => {
+  console.log(`Contribution table created!`);
+});
 
 const port = process.env.PORT || 5000;
 
 // routers
 app.use("/api/users", usersRouter);
 app.use("/api/thread", threadRouter);
+app.use("/api/contribution", contributionRouter);
 app.use("/api/auth", authRouter);
-
-// use passport.authMiddleware() to restrict access to pages where you need to be authenticated
-// eg app.get('/api/create/thread/', passport.authMiddleware(), callback);
 
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`);
