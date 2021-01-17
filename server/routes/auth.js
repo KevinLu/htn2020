@@ -18,7 +18,7 @@ const authMiddleware = () => (req, res, next) => {
 };
 
 /* GET /api/auth/ retrieve user info */
-router.get('/', authMiddleware, (req, res) => {
+router.get('/', authMiddleware(), (req, res) => {
   return res.status(200).json({user: req.user});
 });
 
