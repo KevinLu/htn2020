@@ -150,7 +150,7 @@ router.post("/new", async (req, res) => {
   }
   const title = req.body.title;
   const description = req.body.description;
-  const dropbaseApi = req.body.dropbaseAPI;
+  const dropbaseApi = req.body.pipelineToken;
   const fileUrl = req.body.fileUrl;
 
   Thread.create({
