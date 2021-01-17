@@ -1,8 +1,10 @@
 import React from 'react';
-import {Text, Button, Container, VStack, HStack, AvatarGroup, Avatar} from '@chakra-ui/react';
+import {Text, Button, Container, VStack, HStack, AvatarGroup, Avatar, useDisclosure} from '@chakra-ui/react';
 import Contribution from '../Contribution';
+import ContributeModal from '../ContributeModal';
 
 function ContributionList(props) {
+  const {isOpen, onOpen, onClose} = useDisclosure();
   const {mb} = props;
   return (
     <Container
@@ -24,7 +26,7 @@ function ContributionList(props) {
             <Avatar name="Prosper Otemuyiwa" src="https://bit.ly/prosper-baba" />
             <Avatar name="Christian Nwamba" src="https://bit.ly/code-beast" />
           </AvatarGroup>
-          <Button colorScheme="purple" variant="outline">
+          <Button colorScheme="purple" variant="outline" onClick={onOpen}>
             Contribute
           </Button>
         </HStack>
@@ -34,6 +36,7 @@ function ContributionList(props) {
         <Contribution />
         <Contribution />
       </VStack>
+      <ContributeModal isOpen={isOpen} onClose={onClose} />
     </Container>
   );
 }
