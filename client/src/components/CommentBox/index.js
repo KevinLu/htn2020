@@ -7,7 +7,7 @@ function postMessage(threadId, comment) {
     console.log(comment);
 
     // todo use threadid
-    Axios.post("/api/thread/ae5af94d-0305-4318-8d47-38c507b0a31d/comments",
+    Axios.post("/api/thread/8402b2b4-8dea-4c59-84e8-787af17ee33d/comments",
         {
             comment: comment
         })
@@ -19,7 +19,7 @@ function postMessage(threadId, comment) {
 function CommentBox(props) {
     //const threadId = props.threadId;
     let [value, setValue] = React.useState("")
-    const threadId = "ae5af94d-0305-4318-8d47-38c507b0a31d";
+    const threadId = "8402b2b4-8dea-4c59-84e8-787af17ee33d";
     const defaultData = {
         username: "Anonymous",
         avatar: "",

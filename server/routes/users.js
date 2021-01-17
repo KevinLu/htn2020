@@ -1,18 +1,15 @@
-const express = require("express");
-const router = express.Router();
-const User = require("../models/User");
+const express = require('express')
+const router = express.Router()
+const User = require('../models/User')
 
-router.get("/self", async (req, res) => {
-  var userId = null;
-  if (req.user) {
-    userId = req.user.uuid;
-  }
+router.get('/:userId', async (req, res) => {
+    const userId = req.params.userId
 
-  const user = await User.findByPk(userId);
+    const user = await User.findByPk(userId);
+    
+    // todo send data about user
 
-  // todo send data about user
+    res.send(user)
+})
 
-  res.send(user);
-});
-
-module.exports = router;
+module.exports = router

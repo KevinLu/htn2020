@@ -63,6 +63,7 @@ router.post("/:id/comments", async (req, res) => {
   }
   const comment = req.body.comment;
   var mainThread = await Thread.findByPk(threadId);
+  console.log(threadId, mainThread)
 
   var commentObj = await Comment.create({
     user: userId,
@@ -80,7 +81,7 @@ router.post("/:id/comments", async (req, res) => {
   }
 
   mainThread.comments = commentsArr;
-
+  
   const finalThread = await mainThread.save();
 
   res.send(finalThread);
