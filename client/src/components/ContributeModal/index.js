@@ -58,8 +58,7 @@ function ContributeModal(props) {
           duration: 3000,
           isClosable: true,
         });
-
-        //props.updateContributions();
+        props.updateContributions();
       } else {
         toast({
           position: 'bottom',
@@ -96,9 +95,9 @@ function ContributeModal(props) {
                       dataToSubmit
                     )
                       .then(response => {
-                        console.log(response);
+                        console.log("contribution submitted", response);
                         if (response.status === 200) {
-                          props.history.push('/');
+                          window.location.reload();
                         }
                       })
                       .catch(err => {
