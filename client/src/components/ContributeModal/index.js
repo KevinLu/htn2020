@@ -77,7 +77,7 @@ function ContributeModal(props) {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Contribute to a thread</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
           <Formik
