@@ -1,4 +1,6 @@
 const express = require("express");
+const cookieSession = require("cookie-session");
+
 const app = express();
 const path = require("path");
 const cors = require("cors");
@@ -6,6 +8,7 @@ const sequelize = require("./services/database");
 
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const passportSetup = require('./auth/setup_passport');
 
 const threadRouter = require("./routes/thread.js");
 const usersRouter = require("./routes/users.js");
@@ -19,8 +22,16 @@ const CommentModel = require("./models/Comment");
 const ContributionModel = require("./models/Contribution");
 
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(cookieSession({
+  keys: ['secret key'],
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
@@ -37,6 +48,7 @@ if (process.env.NODE_ENV === "production") {
 UserModel.sync().then(() => {
   console.log(`User table created!`);
 });
+
 ThreadModel.sync().then(() => {
   console.log(`Thread table created!`);
 });
@@ -53,7 +65,7 @@ const port = process.env.PORT || 5000;
 app.use("/api/users", usersRouter);
 app.use("/api/thread", threadRouter);
 app.use("/api/contribution", contributionRouter);
-app.use("/auth", authRouter);
+app.use("/api/auth", authRouter);
 
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`);

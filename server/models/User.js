@@ -8,7 +8,11 @@ var User = sequelize.define("users", {
     primaryKey: true,
     defaultValue: () => uuidv4(),
   },
-  username: { type: Sequelize.STRING },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+  },
   password: { type: Sequelize.STRING },
   avatar: { type: Sequelize.STRING }
 });

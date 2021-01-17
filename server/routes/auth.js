@@ -1,31 +1,59 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
+const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
-/*
- * todo i think we use passport.js or something for auth strategy.
- *  then we can also implement fb oauth easily.
- * */
+router.post('/login', function (req, res, next) {
+  passport.authenticate('local',
+    {
+      failureRedirect: 'http://localhost:3000/login/',
+      successRedirect: 'http://localhost:3000/',
+    },
+    function (err, user) {
+      if (err) {
+        return next(err);
+      }
 
-router.post("/login", (req, res) => {
-  var username = req.params.username;
-  var password = req.params.password;
+      if (!user) {
+        return res.status(401).json({message: "user not found!"});
+      }
 
-  res.send(username);
+      req.login(user, function (err) {
+        if (err) {
+          next(err);
+          return;
+        }
+
+        return res.status(200).json(user);
+      });
+    })(req, res, next);
 });
 
-router.post("/signup", async (req, res) => {
-  var username = req.body["username"];
-  var password = req.body["password"];
+router.post('/logout', (req, res) => {
+  req.logout();
+});
 
-  console.log(username, password)
+const saltRounds = 10
 
-  const user = User.create({
-    "username": username,
-    "password": password
-  });
+router.post('/register', (req, res) => {
+  const salt = bcrypt.genSaltSync(saltRounds);
+  const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
-  res.send(user);
+  User.create({
+    username: req.body.username,
+    password: hashedPassword
+  })
+    .then((response) => {
+      console.log(response);
+      return res.status(200).json({username: req.body.username});
+    })
+    .catch(err => {
+      if (err.name === "SequelizeUniqueConstraintError") {
+        return(res.status(400).json({message: "username already exists!"}));
+      }
+      return(res.status(400).json(err));
+    });
 });
 
 module.exports = router;
