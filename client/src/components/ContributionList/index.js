@@ -27,7 +27,7 @@ function ContributionList(props) {
 
   const [contributions, setContributions] = useState([]);
 
-  useEffect(() => {
+  function updateContributions() {
     Axios.get("/api/thread/" + threadId + '/contributions')
         .then(response => {
           if (response.status === 200) {
@@ -59,6 +59,10 @@ function ContributionList(props) {
             });*/
           }
         })
+  }
+
+  useEffect(() => {
+    updateContributions();
   }, []);
 
   return (
@@ -94,7 +98,7 @@ function ContributionList(props) {
           return <Contribution data={contribution} />
         })}
       </VStack>
-      <ContributeModal isOpen={isOpen} onClose={onClose} threadId={threadId}/>
+      <ContributeModal updateContributions={updateContributions} isOpen={isOpen} onClose={onClose} threadId={threadId}/>
     </Container>
   );
 }
