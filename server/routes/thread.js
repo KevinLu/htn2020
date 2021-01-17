@@ -148,9 +148,6 @@ router.get("/threads", async (req, res) => {
     })
     i == threads.length - 1 ? res.send(threadArr) : console.log();
   })
-
-  //console.log(threadArr);
-
   
 });
 

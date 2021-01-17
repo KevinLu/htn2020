@@ -20,14 +20,15 @@ function ThreadList() {
           let newthreads = [];
           response.data.forEach((thread, index) => {
             newthreads[index] = {
-              threadUrl: thread.threadUrl,
+              threadUrl: thread.uuid,
               title: thread.title,
               timeSince: getRelativeTime(thread.createdAt),
               description: thread.description,
               commentCount: thread.comments ? thread.comments : 0,
               contributionCount: thread.contributions ? thread.contributions : 0,
               rating: thread.rating ? thread.rating : 0,
-              vote: "up"
+              vote: "up",
+              user: thread.user
             };
           });
           setThreads(newthreads);
