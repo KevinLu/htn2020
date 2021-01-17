@@ -101,7 +101,7 @@ function ThreadPage(props) {
           </Flex>
         </HStack>
       </Container>
-      <ContributionList mb={2} />
+      <ContributionList mb={2} threadId={threadId}/>
       <CommentList threadId={threadId} />
     </Box>
   );

@@ -5,7 +5,7 @@ import ContributeModal from '../ContributeModal';
 
 function ContributionList(props) {
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {mb} = props;
+  const {mb, threadId} = props;
   return (
     <Container
       mb={mb}
@@ -36,7 +36,7 @@ function ContributionList(props) {
         <Contribution />
         <Contribution />
       </VStack>
-      <ContributeModal isOpen={isOpen} onClose={onClose} />
+      <ContributeModal isOpen={isOpen} onClose={onClose} threadId={threadId}/>
     </Container>
   );
 }
