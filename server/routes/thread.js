@@ -133,7 +133,8 @@ router.post("/:id/contributions", passport.authMiddleware, async (req, res) => {
   var mainThread = await Thread.findByPk(threadId);
 
   var contribObj = await Contribution.create({
-    user: userId,
+    username: username,
+    avatar: avatar,
     description: description,
     fileUrl: file,
     fileSize: fileSize

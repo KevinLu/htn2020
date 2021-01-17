@@ -24,8 +24,8 @@ function ThreadList() {
               title: thread.title,
               timeSince: getRelativeTime(thread.createdAt),
               description: thread.description,
-              commentCount: thread.comments ? thread.comments : 0,
-              contributionCount: thread.contributions ? thread.contributions : 0,
+              commentCount: thread.comments ? thread.comments.length : 0,
+              contributionCount: thread.contributions ? thread.contributions.length : 0,
               rating: thread.rating ? thread.rating : 0,
               vote: "none", // up or down
               user: thread.user

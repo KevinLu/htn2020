@@ -11,7 +11,7 @@ function Contribution(props) {
   };*/
 
   const data = props.data;
-
+  console.log(data.threadUrl)
   return (
     <Flex
       borderWidth="1px"

@@ -12,6 +12,7 @@ const authMiddleware = (req, res, next) => {
     return res.status(400).json({message: "not logged in."});
   }
   // User is logged in, call next middleware
+  console.log("passed auth, onto the next one")
   next();
 };
 
