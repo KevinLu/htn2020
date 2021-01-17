@@ -1,19 +1,19 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {Box, HStack, Badge, Flex} from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
+import { Box, HStack, Badge, Flex } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import {ChatIcon, StarIcon} from '@chakra-ui/icons';
+import { ChatIcon, StarIcon } from '@chakra-ui/icons';
 import RatingBox from '../RatingBox';
 
 const HoverEffect = styled.div`
-&:hover {
-  background-color: #EDF2F7;
-  transition: 0.2s ease-out;
-}
+  &:hover {
+    background-color: #edf2f7;
+    transition: 0.2s ease-out;
+  }
 `;
 
 function Thread(props) {
-  const {data} = props;
+  const { data } = props;
   /*const data = {
     threadUrl: "the-thread-url",
     title: "Need custom datasets for research purposes",
@@ -26,17 +26,23 @@ function Thread(props) {
   }*/
 
   return (
-    <HStack w="100%" borderWidth="1px" borderRadius="lg" overflow="hidden" spacing="0">
+    <HStack
+      w="100%"
+      borderWidth="1px"
+      borderRadius="lg"
+      overflow="hidden"
+      spacing="0"
+    >
       <Box pl="4">
         <RatingBox rating={data.rating} vote={data.vote} />
       </Box>
       <Box p={4}>
-        <Link to={`/thread/${data.threadUrl}`}>
+        <Link to={{ pathname: `/thread/${data.threadUrl}`, state: data }}>
           <Box>
             <Box d="flex" alignItems="baseline">
               <Badge borderRadius="full" px="2" colorScheme="blue">
                 New
-                </Badge>
+              </Badge>
               <Box
                 color="gray.500"
                 fontWeight="semibold"
@@ -46,7 +52,7 @@ function Thread(props) {
                 ml="2"
               >
                 {data.timeSince} ago
-                </Box>
+              </Box>
             </Box>
 
             <Box
@@ -65,16 +71,16 @@ function Thread(props) {
 
             <HStack mt="3" spacing={4}>
               <Flex alignItems="center">
-                <StarIcon color={"purple.500"} />
+                <StarIcon color={'purple.500'} />
                 <Box as="span" ml="2" color="gray.600" fontSize="sm">
                   {data.contributionCount} contributions
-                  </Box>
+                </Box>
               </Flex>
               <Flex alignItems="center">
-                <ChatIcon color={"purple.500"} />
+                <ChatIcon color={'purple.500'} />
                 <Box as="span" ml="2" color="gray.600" fontSize="sm">
                   {data.commentCount} comments
-                  </Box>
+                </Box>
               </Flex>
             </HStack>
           </Box>

@@ -14,7 +14,7 @@ function ThreadList() {
                     let newthreads = [];
                     response.data.forEach((thread, index) => {
                         newthreads[index] = {
-                            threadUrl: thread.threadUrl,
+                            threadUrl: thread.uuid,
                             title: thread.title,
                             timeSince: "5 hours",
                             description: thread.description,

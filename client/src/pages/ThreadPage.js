@@ -11,18 +11,21 @@ function ThreadPage(props) {
       document.body.style.backgroundColor = "#fff";
     });
   }, []);
-  const data = {
-    username: "Some Scientist",
-    avatar: "https://bit.ly/dan-abramov",
-    threadUrl: "the-thread-url",
-    title: "Need custom datasets for research purposes",
-    timeSince: "5 hours",
-    description: "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.",
-    commentCount: 34,
-    contributionCount: 16,
-    rating: 20,
-    vote: "up",
-  }
+  // const data = {
+  //   username: "Some Scientist",
+  //   avatar: "https://bit.ly/dan-abramov",
+  //   threadUrl: "the-thread-url",
+  //   title: "Need custom datasets for research purposes",
+  //   timeSince: "5 hours",
+  //   description: "Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book.",
+  //   commentCount: 34,
+  //   contributionCount: 16,
+  //   rating: 20,
+  //   vote: "up",
+  // }
+  const data = props.location.state;
+  console.log(data)
+  console.log(props)
   return (
     <Box mt={2}>
       <Container
@@ -36,8 +39,8 @@ function ThreadPage(props) {
           {data.title}
         </Heading>
         <Flex alignItems="center" mb={2}>
-          <Avatar size="sm" name={data.username} src={data.avatar} />
-          <Text fontWeight="semibold" ml="2">{data.username}</Text>
+          <Avatar size="sm" name={data.user} src={data.avatar} />
+          <Text fontWeight="semibold" ml="2">{data.user}</Text>
           <Text color="gray.500" ml="2">
             posted {data.timeSince} ago
           </Text>
