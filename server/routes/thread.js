@@ -34,13 +34,14 @@ router.post("/upload", async (req, res) => {
 router.get("/:id/contributions", (req, res) => {
   const threadId = req.params.id;
 
-  Thread.findByPk(threadId).then((thread, err) => {
+  Thread.findByPk(threadId).then(async (thread, err) => {
     if (thread) {
       if (thread.contributions == null) {
         return res.json([]);
       }
 
-      res.json(thread.contributions);
+      const contributions = await Promise.all(thread.contributions.map(id => Contribution.findByPk(id)))
+      res.send(contributions);
     } else {
       res.send("Thread not found. Error: " + JSON.stringify(err));
     }

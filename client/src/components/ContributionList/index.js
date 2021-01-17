@@ -34,6 +34,8 @@ function ContributionList(props) {
             let newContributions = [];
 
             response.data.forEach((contribution, index) => {
+              console.log(contribution);
+
               newContributions[index] = {
                 avatar: contribution.avatar,
                 username: contribution.username,
