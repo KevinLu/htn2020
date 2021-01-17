@@ -1,4 +1,4 @@
-# crowd.source
+# crowd.data
 
 ## Inspiration
 
