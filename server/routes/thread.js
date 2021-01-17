@@ -144,12 +144,14 @@ router.post("/new", async (req, res) => {
   const title = req.body.title;
   const description = req.body.description;
   const dropbaseApi = req.body.dropbaseAPI;
+  const fileUrl = req.body.fileUrl;
 
   Thread.create({
     user: userId,
     title: title,
     description: description,
     dropbaseApi: dropbaseApi,
+    fileUrl: fileUrl,
   }).then((thread, err2) => {
     res.send(thread);
   });

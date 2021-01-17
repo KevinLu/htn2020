@@ -6,15 +6,21 @@ import {
   Heading,
   Input,
   Textarea,
+  Tag, TagLabel, TagCloseButton,
+  useToast,
 } from '@chakra-ui/react';
 
-import { Field, Form, Formik } from 'formik';
-import React, { useEffect, useCallback } from 'react';
+import {Field, Form, Formik} from 'formik';
+import React, {useEffect, useState} from 'react';
 import * as Yup from 'yup';
 import Axios from 'axios';
-import { useDropzone } from 'react-dropzone';
+import {useDropzone} from 'react-dropzone';
 
 function CreateThread() {
+  const uploadUrl = '/api/contribution/upload';
+  const [Files, setFiles] = useState([]);
+  const toast = useToast();
+
   useEffect(() => {
     document.body.style.backgroundColor = '#EDF2F7';
     return () => {
@@ -22,38 +28,72 @@ function CreateThread() {
     };
   }, []);
 
-  let formData = new FormData();
-
-  const onDrop = useCallback(acceptedFiles => {
-    acceptedFiles.map(file => {
-      console.log("file: " + file);
-      formData.append('file', file, file.name);
+  const onDelete = (file) => {
+    setFiles(Files.filter(item => item.name !== file.name));
+    toast({
+      position: "bottom",
+      title: "File removed.",
+      duration: 2000,
+      isClosable: true
     });
-  }, []);
+  }
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const onDrop = (files) => {
+    console.log(files);
+    let formData = new FormData();
+    const config = {
+      header: {'content-type': 'multipart/form-data'}
+    }
+    formData.append("file", files[0]);
+    Axios.post(uploadUrl, formData, config)
+      .then(response => {
+        console.log(response);
+        if (response.data.success) {
+          setFiles([...Files, response.data.file]);
+          toast({
+            position: "bottom",
+            title: "File uploaded.",
+            description: "File successfully uploaded.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        } else {
+          toast({
+            position: "bottom",
+            title: "Error uploading file.",
+            description: "Check the file type.",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+        }
+      });
+  }
+
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
 
   return (
     <Formik
       onSubmit={(values, actions) => {
         setTimeout(() => {
           // TODO:
-          /*const dataToSubmit = {
-                        user: user.id,
-                        pipelineToken: values.pipelineToken,
-                        title: values.title,
-                        message: values.message
-                    };
-                    console.log(dataToSubmit)
-                    Axios.post('/api/thread/new', dataToSubmit)
-                        .then(response => {
+          const dataToSubmit = {
+            pipelineToken: values.pipelineToken,
+            title: values.title,
+            message: values.message,
+            fileUrl: Files[0].location,
+          };
+          console.log(dataToSubmit)
+          Axios.post('/api/thread/new', dataToSubmit)
+            .then(response => {
 
-                            console.log(response);
-                        })
-                        .catch(err => {
-                            console.log(err);
-                        });
-                    setSubmitting(false);*/
+              console.log(response);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+            actions.setSubmitting(false);
         }, 500);
       }}
       initialValues={{}}
@@ -70,7 +110,7 @@ function CreateThread() {
       {props => (
         <Box
           mt="4%"
-          width={{ base: '95%', sm: '800px' }}
+          width={{base: '95%', sm: '800px'}}
           backgroundColor="white"
           mr="auto"
           ml="auto"
@@ -84,7 +124,7 @@ function CreateThread() {
 
           <Form>
             <Field name="pipelineToken">
-              {({ field, form }) => (
+              {({field, form}) => (
                 <FormControl
                   mt={4}
                   isInvalid={
@@ -104,7 +144,7 @@ function CreateThread() {
             </Field>
 
             <Field name="title">
-              {({ field, form }) => (
+              {({field, form}) => (
                 <FormControl
                   isInvalid={form.errors.title && form.touched.title}
                   mt={4}
@@ -116,7 +156,7 @@ function CreateThread() {
             </Field>
 
             <Field name="message">
-              {({ field, form }) => (
+              {({field, form}) => (
                 <FormControl
                   isInvalid={form.errors.message && form.touched.message}
                   mt={4}
@@ -133,31 +173,47 @@ function CreateThread() {
 
             <div
               className="container"
-              style={{ marginTop: '15px', marginBottom: '15px', borderWidth: "2px", borderStyle: 'dashed', padding: '5px' }}
+              style={{marginTop: '15px', marginBottom: '15px', borderWidth: "2px", borderStyle: 'dashed', padding: '5px'}}
             >
               <div {...getRootProps()}>
                 <input {...getInputProps()} />
                 {isDragActive ? (
                   <p>Drop the files here ...</p>
                 ) : (
-                  <p>Drag 'n' drop some files here, or click to select files</p>
-                )}
+                    <p>Drag 'n' drop some files here, or click to select files</p>
+                  )}
               </div>
             </div>
 
+            <Box>
+              {Files.map((file, index) => (
+                <div key={index} style={{marginLeft: 'auto', marginBottom: '3px'}}>
+                  <Tag
+                    size="md"
+                    key={index}
+                    variant="solid"
+                    colorScheme="blue"
+                  >
+                    <TagLabel>{file.name}</TagLabel>
+                    <TagCloseButton onClick={() => onDelete(file)} />
+                  </Tag>
+                </div>
+              ))}
+            </Box>
+
             <Button
               mt={4}
-              colorScheme="teal"
+              colorScheme="purple"
               isLoading={props.isSubmitting}
               type="submit"
             >
               Submit
-            </Button>
+                        </Button>
           </Form>
         </Box>
       )}
     </Formik>
-  );
+  )
 }
 
 export default CreateThread;
