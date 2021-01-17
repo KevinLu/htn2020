@@ -21,7 +21,7 @@ function getRelativeTime(date) {
 }
 
 function ContributionList(props) {
-  const threadId = props.threadId;
+  // const threadId = props.threadId;
   const {isOpen, onOpen, onClose} = useDisclosure();
   const {mb} = props;
 
@@ -93,8 +93,7 @@ function ContributionList(props) {
           return <Contribution data={contribution} />
         })}
       </VStack>
-
-      <ContributeModal isOpen={isOpen} onClose={onClose} />
+      <ContributeModal isOpen={isOpen} onClose={onClose} threadId={threadId}/>
     </Container>
   );
 }
