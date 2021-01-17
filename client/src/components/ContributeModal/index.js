@@ -90,7 +90,7 @@ function ContributeModal(props) {
                     fileUrl: Files[0].location,
                   };
                   console.log(dataToSubmit)
-                  Axios.post(`/api/${threadId}/contributions`, dataToSubmit)
+                  Axios.post(`/api/thread/${threadId}/contributions`, dataToSubmit)
                     .then(response => {
                       console.log(response);
                       if (response.status === 200) {
