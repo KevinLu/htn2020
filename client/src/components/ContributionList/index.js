@@ -28,7 +28,7 @@ function ContributionList(props) {
   const [contributions, setContributions] = useState([]);
 
   useEffect(() => {
-    Axios.get("/api/thread/ " + threadId + '/contributions')
+    Axios.get("/api/thread/" + threadId + '/contributions')
         .then(response => {
           if (response.status === 200) {
             let newContributions = [];
