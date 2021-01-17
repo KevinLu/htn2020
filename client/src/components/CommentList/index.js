@@ -19,12 +19,11 @@ function CommentList(props) {
         Axios.get("/api/thread/" + threadId + "/comments")
             .then(res => {
                 let newComments = [];
-                console.log(res.data);
 
                 res.data.forEach((comment, index) => {
                     newComments[index] = {
-                        username: comment.user.username,
-                        avatar: comment.user.avatar,
+                        username: comment.username,
+                        avatar: comment.avatar,
                         comment: comment.comment,
                         timeSince: getRelativeTime(comment.createdAt)
                     };
