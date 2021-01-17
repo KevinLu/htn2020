@@ -1,29 +1,43 @@
-const express = require('express')
+const express = require("express");
 const router = express.Router();
-const Contribution = require('../models/Contribution')
 const axios = require("axios");
+var upload = require('../services/multer');
 
-router.get('/:contribution_id', async (req, res) => {
-    const contributionId = req.params.contribution_id;
-    const contribution = await Contribution.findByPk(contributionId);
+const Contribution = require("../models/Contribution");
 
-    if (contribution) {
-        res.send(contribution);
-    } else {
-        res.send('bad request');
-    }
-})
+router.get("/:contribution_id", async (req, res) => {
+  const contributionId = req.params.contribution_id;
+  const contribution = await Contribution.findByPk(contributionId);
 
-router.post('/contribution/upload', async (req, res) => {
-    const formData = req.body.formUrl;
+  if (contribution) {
+    res.send(contribution);
+  } else {
+    res.send("bad request");
+  }
+});
 
-    axios.post
+router.post("/upload", upload.single('csv'), async (req, res) => {
 
-    if (contribution) {
-        res.send(contribution);
-    } else {
-        res.send('bad request');
-    }
-})
+  var userId = null;
+  if (req.user) {
+    userId = req.user.uuid
+  }
+  const csv = req.file;
+  const desc = req.body.description;
+
+  console.log(req.file)
+
+  var contribObj = await Contribution.create({
+    user: userId,
+    description: desc,
+    csv: csv,
+  });
+  
+  if (contribObj) {
+    res.send(contribObj);
+  } else {
+    res.send("bad request");
+  }
+});
 
 module.exports = router;

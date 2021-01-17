@@ -65,38 +65,33 @@ router.post("/:id/comments", async (req, res) => {
 router.post("/:id/contributions", async (req, res) => {
   const threadId = req.params.id;
 
-  const userId = req.body.user;
-  const description = req.body.description;
-  const csv = req.body.csv;
+  var userId = null;
+  if (req.user) {
+    userId = req.user.uuid;
+  }
+  const contribId = req.body.contributionId;
 
-//   var fileSize = 0;
-//   try {
-//     const response = await axios.head(file);
-//     fileSize = response.headers["content-length"];
-//   } catch (e) {
-//     console.log(e);
-//   }
+  //   var fileSize = 0;
+  //   try {
+  //     const response = await axios.head(file);
+  //     fileSize = response.headers["content-length"];
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
 
   var mainThread = await Thread.findByPk(threadId);
 
   // Sending to dropbase pipeline
   const pipelineToken = mainThread.dropbaseApi;
-  await dropbase.runPipelineUrl(pipelineToken, file);
-
-  var contribObj = await Contribution.create({
-    user: userId,
-    description: description,
-    csv: csv,
-  });
-  const uuid = contribObj.uuid;
+  await dropbase.runPipelineUrl(pipelineToken, file); // needs fixing
 
   var contribArr;
 
   if (mainThread.contributions != null) {
     contribArr = [...mainThread.contributions];
-    contribArr.push(uuid);
+    contribArr.push(contribId);
   } else {
-    contribArr = [uuid];
+    contribArr = [contribId];
   }
 
   mainThread.contributions = contribArr;
