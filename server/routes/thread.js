@@ -115,6 +115,7 @@ router.post("/:id/contributions", async (req, res) => {
     user: userId,
     description: description,
     fileUrl: file,
+    fileSize: fileSize
   });
   const uuid = contribObj.uuid;
 

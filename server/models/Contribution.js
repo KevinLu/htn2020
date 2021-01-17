@@ -16,6 +16,7 @@ var Contribution = sequelize.define("contributions", {
     type: Sequelize.STRING,
   },
   fileUrl: { type: Sequelize.STRING },
+  fileSize: { type: Sequelize.INTEGER },
   description: { type: Sequelize.STRING },
 });
 
