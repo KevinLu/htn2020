@@ -80,29 +80,31 @@ function ContributeModal(props) {
           <ModalBody>
             <Formik
               onSubmit={(values, actions) => {
-                setTimeout(() => {
-                  // TODO:
-                  const dataToSubmit = {
-                    title: values.title,
-                    description: values.message,
-                    fileUrl: Files[0].location,
-                  };
-                  console.log(dataToSubmit);
-                  Axios.post(
-                    `/api/thread/${threadId}/contributions`,
-                    dataToSubmit
-                  )
-                    .then(response => {
-                      console.log(response);
-                      if (response.status === 200) {
-                        props.history.push('/');
-                      }
-                    })
-                    .catch(err => {
-                      console.log(err);
-                    });
-                  actions.setSubmitting(false);
-                }, 500);
+                if (Files.length > 0) {
+                  setTimeout(() => {
+                    // TODO:
+                    const dataToSubmit = {
+                      title: values.title,
+                      description: values.message,
+                      fileUrl: Files[0].location,
+                    };
+                    console.log(dataToSubmit);
+                    Axios.post(
+                      `/api/thread/${threadId}/contributions`,
+                      dataToSubmit
+                    )
+                      .then(response => {
+                        console.log(response);
+                        if (response.status === 200) {
+                          props.history.push('/');
+                        }
+                      })
+                      .catch(err => {
+                        console.log(err);
+                      });
+                    actions.setSubmitting(false);
+                  }, 500);
+                }
               }}
               initialValues={{}}
             >
@@ -214,7 +216,7 @@ function ContributeModal(props) {
                       colorScheme="blue"
                       type="close"
                       onClick={onClose}
-                      style={{marginLeft: "20px"}}
+                      style={{ marginLeft: '20px' }}
                     >
                       Close
                     </Button>
