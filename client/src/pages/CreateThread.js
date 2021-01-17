@@ -81,7 +81,7 @@ function CreateThread() {
           const dataToSubmit = {
             pipelineToken: values.pipelineToken,
             title: values.title,
-            message: values.message,
+            description: values.message,
             fileUrl: Files[0].location,
           };
           console.log(dataToSubmit)
