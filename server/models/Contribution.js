@@ -13,7 +13,7 @@ var Contribution = sequelize.define("contributions", {
     type: Sequelize.UUID,
     references: { model: UserModel, key: "uuid" },
   },
-  csv: { type: Sequelize.BLOB },
+  flleUrl: { type: Sequelize.STRING },
   description: { type: Sequelize.STRING }
 });
 
