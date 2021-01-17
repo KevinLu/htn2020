@@ -13,7 +13,7 @@ var Contribution = sequelize.define("contributions", {
     type: Sequelize.UUID,
     references: { model: UserModel, key: "uuid" },
   },
-  flleUrl: { type: Sequelize.STRING },
+  fileUrl: { type: Sequelize.STRING },
   description: { type: Sequelize.STRING }
 });
 
