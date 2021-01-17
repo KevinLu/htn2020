@@ -163,7 +163,7 @@ router.get("/threads", async (req, res) => {
   const threads = await Thread.findAll({
     offset: offset,
     limit: limit,
-    order: [["updatedAt", "DESC"]],
+    order: [["createdAt", "DESC"]],
   });
 
   console.log("thread req");
