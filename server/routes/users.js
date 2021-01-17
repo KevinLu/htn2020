@@ -2,10 +2,10 @@ const express = require('express')
 const router = express.Router()
 const User = require('../models/User')
 
-router.get('/:userId', (req, res) => {
+router.get('/:userId', async (req, res) => {
     const userId = req.params.userId
 
-    const user = User.findByPk(userId);
+    const user = await User.findByPk(userId);
     
     // todo send data about user
 

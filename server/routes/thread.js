@@ -67,15 +67,15 @@ router.post("/:id/contributions", async (req, res) => {
 
   const userId = req.body.user;
   const description = req.body.description;
-  const file = req.body.file;
+  const csv = req.body.csv;
 
-  var fileSize = 0;
-  try {
-    const response = await axios.head(file);
-    fileSize = response.headers["content-length"];
-  } catch (e) {
-    console.log(e);
-  }
+//   var fileSize = 0;
+//   try {
+//     const response = await axios.head(file);
+//     fileSize = response.headers["content-length"];
+//   } catch (e) {
+//     console.log(e);
+//   }
 
   var mainThread = await Thread.findByPk(threadId);
 
@@ -86,8 +86,7 @@ router.post("/:id/contributions", async (req, res) => {
   var contribObj = await Contribution.create({
     user: userId,
     description: description,
-    file: file,
-    fileSize: fileSize,
+    csv: csv,
   });
   const uuid = contribObj.uuid;
 
