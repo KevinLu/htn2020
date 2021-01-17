@@ -4,7 +4,6 @@ import Comment from '../Comment';
 import CommentBox from '../CommentBox';
 import Axios from "axios";
 import moment from "moment";
-import Thread from "../Thread";
 
 function getRelativeTime(date) {
     const d = new Date(date);
