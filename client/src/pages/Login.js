@@ -33,29 +33,29 @@ function Login(props) {
 
   return (
     <Formik
-      initialValues={{email: '', password: ''}}
+      initialValues={{username: '', password: ''}}
       validationSchema={Yup.object().shape({
-        email: Yup.string().email('Email is invalid').required('Email is required'),
+        username: Yup.string().required('Username is required'),
         password: Yup.string().required('Password is required'),
       })}
       onSubmit={(values, {setSubmitting}) => {
         setTimeout(() => {
           const dataToSubmit = {
-            email: values.email,
+            username: values.username,
             password: values.password,
           };
-          Axios.post('/auth/login', dataToSubmit)
+          Axios.post('/api/auth/login', dataToSubmit)
             .then(response => {
               // If login was successful
-              if (response.data.success) {
+              if (response.status === 200) {
                 // TODO: use history.push or location.href?
                 // props.history.push('/');
                 window.location.href = '/';
               } else {
-                // Login failed not due to incorrect email or password
+                // Login failed not due to incorrect username or password
                 toast({
                   title: 'Login failed.',
-                  description: 'Invalid email or password.',
+                  description: 'Invalid username or password.',
                   position: 'top',
                   status: 'error',
                   duration: 9000,
@@ -64,7 +64,7 @@ function Login(props) {
               }
             })
             .catch(err => {
-              // Login failed due to incorrect email or password, or server error
+              // Login failed due to incorrect username or password, or server error
               // Return the error message from server
               if (err.response.data) {
                 toast({
@@ -96,21 +96,21 @@ function Login(props) {
                 Sign in
               </Heading>
               <form onSubmit={props.handleSubmit}>
-                <Field name="email">
+                <Field name="username">
                   {({field, form}) => (
                     <FormControl
-                      isInvalid={form.errors.email && form.touched.email}
-                      id="email"
+                      isInvalid={form.errors.username && form.touched.username}
+                      id="username"
                       mt={2}
                     >
-                      <FormLabel htmlFor="email">Email</FormLabel>
+                      <FormLabel htmlFor="username">Username</FormLabel>
                       <Input
                         {...field}
                         focusBorderColor="purple.500"
-                        type="email"
-                        placeholder="Enter email address"
+                        type="text"
+                        placeholder="Enter username"
                       />
-                      <FormErrorMessage>{form.errors.email}</FormErrorMessage>
+                      <FormErrorMessage>{form.errors.username}</FormErrorMessage>
                     </FormControl>
                   )}
                 </Field>

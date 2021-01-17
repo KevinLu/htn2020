@@ -37,15 +37,24 @@ router.post('/logout', (req, res) => {
 const saltRounds = 10
 
 router.post('/register', (req, res) => {
-  const salt = bcrypt.genSaltSync(saltRounds)
-  const hashedPassword = bcrypt.hashSync(req.params.password, salt)
+  const salt = bcrypt.genSaltSync(saltRounds);
+  const hashedPassword = bcrypt.hashSync(req.body.password, salt);
 
   User.create({
-    username: req.params.username,
+    username: req.body.username,
     password: hashedPassword
   })
-    .then(res.status(200).send())
-    .catch(err => res.status(400).json(err));
-})
+    .then((response) => {
+      console.log(response);
+      return res.status(200).json({username: req.body.username});
+    })
+    .catch(err => {
+      console.log(err);
+      if (err.name === "SequelizeUniqueConstraintError") {
+        return(res.status(400).json({message: "username already exists!"}));
+      }
+      return(res.status(400).json(err));
+    });
+});
 
 module.exports = router;

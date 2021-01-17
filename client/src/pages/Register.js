@@ -28,13 +28,11 @@ function Register() {
     <Formik
       initialValues={{
         name: '',
-        email: '',
         password: '',
         confirmPassword: '',
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required('Please enter your name'),
-        email: Yup.string().email('Email is invalid').required('Please enter an e-mail'),
         password: Yup.string()
           .min(6, 'Password must be at least 6 characters')
           .required('Please enter a password'),
@@ -44,14 +42,12 @@ function Register() {
       })}
       onSubmit={(values, {setSubmitting}) => {
         setTimeout(() => {
-          const cleanEmail = values.email;
-          cleanEmail.trim();
           const dataToSubmit = {
-            name: values.name,
-            email: values.email,
+            username: values.name,
             password: values.password,
           };
-          Axios.post('/auth/register', dataToSubmit)
+          console.log(dataToSubmit)
+          Axios.post('/api/auth/register', dataToSubmit)
             .then(response => {
               // TODO: auto login user after registering or redirect
               console.log(response);
@@ -89,24 +85,6 @@ function Register() {
                         placeholder="First and last name"
                       />
                       <FormErrorMessage>{form.errors.name}</FormErrorMessage>
-                    </FormControl>
-                  )}
-                </Field>
-                <Field name="email">
-                  {({field, form}) => (
-                    <FormControl
-                      isInvalid={form.errors.email && form.touched.email}
-                      id="email"
-                      mt={2}
-                    >
-                      <FormLabel htmlFor="email">Email</FormLabel>
-                      <Input
-                        {...field}
-                        focusBorderColor="purple.500"
-                        type="email"
-                        placeholder="Enter email address"
-                      />
-                      <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                     </FormControl>
                   )}
                 </Field>
