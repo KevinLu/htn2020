@@ -27,7 +27,7 @@ function ThreadList() {
               commentCount: thread.comments ? thread.comments : 0,
               contributionCount: thread.contributions ? thread.contributions : 0,
               rating: thread.rating ? thread.rating : 0,
-              vote: "up",
+              vote: "none", // up or down
               user: thread.user
             };
           });
