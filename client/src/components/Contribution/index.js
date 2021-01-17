@@ -11,7 +11,7 @@ function Contribution(props) {
   };*/
 
   const data = props.data;
-  console.log(data.threadUrl)
+
   return (
     <Flex
       borderWidth="1px"
@@ -29,7 +29,7 @@ function Contribution(props) {
           <Text color="gray.500">{`(${data.fileSize})`}</Text>
         </HStack>
       </Flex>
-      <Button>View</Button>
+        <Button as="a" href={data.fileUrl}>Download</Button>
     </Flex>
   );
 }

@@ -59,8 +59,7 @@ function CommentList(props) {
       </HStack>
       <CommentBox threadId={threadId} />
       <VStack mt="3" spacing={4}>
-          { comments.map(comment => {
-              console.log(comment);
+          { comments.reverse().map(comment => {
               return <Comment key={comment.uuid} data={comment} />
           })}
       </VStack>
