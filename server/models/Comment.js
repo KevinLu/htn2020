@@ -9,10 +9,6 @@ var Comment = sequelize.define("comments", {
     primaryKey: true,
     defaultValue: () => uuidv4(),
   },
-  // user: {
-  //   type: Sequelize.UUID,
-  //   references: { model: UserModel, key: "uuid" },
-  // },
   username: {
     type: Sequelize.STRING
   },

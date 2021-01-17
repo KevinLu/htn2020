@@ -57,15 +57,18 @@ router.get("/:id/comments", (req, res) => {
 router.post("/:id/comments", async (req, res) => {
   const threadId = req.params.id;
 
-  var userId = null;
+  var username = null;
+  var avatar = null;
   if (req.user) {
-    userId = req.user.uuid;
+    username = req.user.username;
+    avatar = req.user.avatar;
   }
   const comment = req.body.comment;
   var mainThread = await Thread.findByPk(threadId);
 
   var commentObj = await Comment.create({
-    user: userId,
+    username: username,
+    avatar: avatar,
     comment: comment,
   });
   const uuid = commentObj.uuid;
@@ -89,9 +92,11 @@ router.post("/:id/comments", async (req, res) => {
 router.post("/:id/contributions", async (req, res) => {
   const threadId = req.params.id;
 
-  var userId = null;
+  var username = null;
+  var avatar = null;
   if (req.user) {
-    userId = req.user.uuid;
+    username = req.user.username;
+    avatar = req.user.avatar;
   }
   const description = req.body.description;
   const file = req.body.fileUrl;
