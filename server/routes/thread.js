@@ -9,6 +9,27 @@ const Thread = require("../models/Thread");
 const Comment = require("../models/Comment");
 const Contribution = require("../models/Contribution");
 
+router.get("/:threadId", (req, res) => {
+  const threadId = req.params.threadId;
+  // respond with posts and data in the thread
+  res.json(threadId);
+});
+
+router.post("/create/:name", (req, res) => {
+  const name = req.params.name;
+  // TODO: create a thread in the database
+
+  res.send(name);
+});
+
+router.post("/upload", async (req, res) => {
+  // TODO: get token and fileUrl (how?)
+  const token = null;
+  const fileUrl = null;
+  const jobId = await dropbase.runPipelineUrl(token, fileUrl); // This calls the api to upload fileUrl to pipeline token
+  res.json(jobId); // return the jobId
+});
+
 router.get("/:id/contributions", (req, res) => {
   const threadId = req.params.id;
 
@@ -65,33 +86,35 @@ router.post("/:id/comments", async (req, res) => {
 router.post("/:id/contributions", async (req, res) => {
   const threadId = req.params.id;
 
-  var userId = null;
-  if (req.user) {
-    userId = req.user.uuid;
-  }
-  const contribId = req.body.contributionId;
+  const userId = req.body.user;
+  const description = req.body.description;
+  const file = req.body.fileUrl;
 
-  //   var fileSize = 0;
-  //   try {
-  //     const response = await axios.head(file);
-  //     fileSize = response.headers["content-length"];
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
+  var fileSize = 0;
+  try {
+    const response = await axios.head(file);
+    fileSize = response.headers["content-length"];
+  } catch (e) {
+    console.log(e);
+  }
 
   var mainThread = await Thread.findByPk(threadId);
 
-  // Sending to dropbase pipeline
-  const pipelineToken = mainThread.dropbaseApi;
-  await dropbase.runPipelineUrl(pipelineToken, file); // needs fixing
+  var contribObj = await Contribution.create({
+    user: userId,
+    description: description,
+    file: file,
+    fileSize: fileSize,
+  });
+  const uuid = contribObj.uuid;
 
   var contribArr;
 
   if (mainThread.contributions != null) {
     contribArr = [...mainThread.contributions];
-    contribArr.push(contribId);
+    contribArr.push(uuid);
   } else {
-    contribArr = [contribId];
+    contribArr = [uuid];
   }
 
   mainThread.contributions = contribArr;
