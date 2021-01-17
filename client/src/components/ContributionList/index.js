@@ -41,7 +41,7 @@ function ContributionList(props) {
                 username: contribution.username,
                 timeSince: getRelativeTime(contribution.createdAt),
                 description: contribution.description,
-                fileSize: contribution.fileSize
+                fileSize: contribution.fileSize / 1000 + "kb"
               };
             });
 

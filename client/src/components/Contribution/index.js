@@ -25,7 +25,7 @@ function Contribution(props) {
         <HStack mt={2} alignItems="center">
           <Avatar size="xs" name={data.username} src={data.avatar} />
           <Text>{data.username}</Text>
-          <Text color="gray.500">{`contributed ${data.timeSince} ago`}</Text>
+          <Text color="gray.500">{`contributed ${data.timeSince}`}</Text>
           <Text color="gray.500">{`(${data.fileSize})`}</Text>
         </HStack>
       </Flex>

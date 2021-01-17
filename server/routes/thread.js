@@ -51,12 +51,12 @@ router.get("/:id/contributions", (req, res) => {
 router.get("/:id/comments", (req, res) => {
   const threadId = req.params.id;
 
-  Thread.findByPk(threadId).then((thread, err) => {
+  Thread.findByPk(threadId).then(async (thread, err) => {
     if (thread) {
-      Promise.all(thread.comments.map(commentId => Comment.findByPk(commentId))).then(comments => {
-        console.log(comments);
-        res.send(comments);
-      });
+      const comments = await Promise.all(thread.comments.map(commentId => Comment.findByPk(commentId)))
+
+      console.log(comments);
+      res.send(comments);
     } else {
       res.send("Thread not found. Error: " + JSON.stringify(err));
     }
