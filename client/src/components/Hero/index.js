@@ -1,5 +1,6 @@
 import React from 'react';
-import {Box, Heading, Text, Button, Container, HStack} from '@chakra-ui/react';
+import {Heading, Text, Button, Container, HStack} from '@chakra-ui/react';
+import {Link} from 'react-router-dom';
 
 function Hero() {
   return (
@@ -28,12 +29,17 @@ function Hero() {
         Request data from the community and contribute to open-source data!
       </Text>
       <HStack spacing={4}>
-        <Button colorScheme="purple" variant="solid" size="lg">
-          Get started
-        </Button>
-        <Button colorScheme="purple" variant="outline" size="lg">
-          Sign in
-        </Button>
+        <Link to="/create/thread">
+          <Button colorScheme="purple" variant="solid" size="lg">
+            Get started
+          </Button>
+        </Link>
+        {window.localStorage.getItem("loggedIn") !== "true" ?
+          <Link to="/login">
+            <Button colorScheme="purple" variant="outline" size="lg">
+              Sign in
+            </Button>
+          </Link> : null}
       </HStack>
     </Container>
   );

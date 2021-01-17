@@ -12,7 +12,15 @@ const PUBLIC_ONLY = 2; // includes anonymous users
 export default function (SpecificComponent, option) {
   function AuthenticationCheck(props) {
     const authQuery = useQuery('auth', async () => Axios.get('/api/auth/'), {retry: false});
-    console.log(authQuery);
+    console.log(authQuery.data);
+    
+    if (!authQuery.isLoading && authQuery.isSuccess && authQuery.data) {
+      window.localStorage.setItem("loggedIn", "true");
+      window.localStorage.setItem("username", authQuery.data.data.user.username);
+      window.localStorage.setItem("avatar", authQuery.data.data.user.avatar);
+    } else if (!authQuery.isLoading && authQuery.isError) {
+      window.localStorage.setItem("loggedIn", "false");
+    }
 
     if (option === PUBLIC_PAGE) {
       return (
@@ -23,7 +31,7 @@ export default function (SpecificComponent, option) {
         return (<Loading />);
       } else if (!authQuery.isLoading && authQuery.isSuccess && authQuery.data) {
         return (
-          <SpecificComponent {...props} user={authQuery.data.user} />
+          <SpecificComponent {...props} user={authQuery.data.data.user} />
         );
       } else if (!authQuery.isLoading && authQuery.isError) {
         window.location.href = '/';

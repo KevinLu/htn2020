@@ -106,3 +106,4 @@ dist
 # CockroachDB files
 /cockroach-data
 /node1
+server/config/dev.js
