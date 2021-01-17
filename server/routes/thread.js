@@ -59,10 +59,8 @@ router.get("/:id/comments", (req, res) => {
       }
 
       Promise.all(thread.comments.map(commentId => {
-        console.log("commendID: " + commentId);
         Comment.findByPk(commentId);
       })).then(comments => {
-        console.log(comments);
         res.send(comments);
       })
     } else {
@@ -71,7 +69,7 @@ router.get("/:id/comments", (req, res) => {
   });
 });
 
-router.post("/:id/comments", passport.authMiddleware, async (req, res) => {
+router.post("/:id/comments", passport.authMiddleware(), async (req, res) => {
   const threadId = req.params.id;
 
   console.log("new comment in " + threadId)
@@ -92,6 +90,7 @@ router.post("/:id/comments", passport.authMiddleware, async (req, res) => {
     avatar: avatar,
     comment: comment,
   });
+
   const uuid = commentObj.uuid;
 
   var commentsArr;
@@ -110,7 +109,7 @@ router.post("/:id/comments", passport.authMiddleware, async (req, res) => {
   res.send(finalThread);
 });
 
-router.post("/:id/contributions", passport.authMiddleware, async (req, res) => {
+router.post("/:id/contributions", passport.authMiddleware(), async (req, res) => {
   const threadId = req.params.id;
 
   var username = null;
@@ -171,7 +170,7 @@ router.get("/threads", async (req, res) => {
   res.send(threads);
 });
 
-router.post("/new", passport.authMiddleware, async (req, res) => {
+router.post("/new", passport.authMiddleware(), async (req, res) => {
   var userId = null;
   if (req.user) {
     userId = req.user.uuid;

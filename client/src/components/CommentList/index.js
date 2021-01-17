@@ -13,7 +13,7 @@ function getRelativeTime(date) {
 function CommentList(props) {
     const [comments, setComments] = useState([]);
 
-    const threadId = props.threadId
+    const threadId = props.threadId;
 
     useEffect(() => {
         Axios.get("/api/thread/" + threadId + "/comments")
@@ -28,8 +28,6 @@ function CommentList(props) {
                         comment: comment.comment,
                         timeSince: getRelativeTime(comment.createdAt)
                     };
-
-                    Axios.get("/api/user/")
                 });
 
                 setComments(newComments);

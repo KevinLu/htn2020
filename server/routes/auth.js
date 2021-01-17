@@ -4,13 +4,14 @@ const passport = require("passport");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
-const authMiddleware = (req, res, next) => {
-  console.log(req.isAuthenticated());
+const authMiddleware = () => (req, res, next) => {
   // If user is not logged in
-  if (!req.isAuthenticated()) {
+  if (!req.user) {
     // NOTE: THIS RETURNS WITH STATUS CODE 200
     return res.status(400).json({message: "not logged in."});
   }
+
+  console.log("user is authed");
   // User is logged in, call next middleware
   console.log("passed auth, onto the next one")
   next();
