@@ -33,7 +33,8 @@ var Thread = sequelize.define("threads", {
     })
   },
   rating: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   },
   dropbaseApi: { type: Sequelize.STRING },
 });
