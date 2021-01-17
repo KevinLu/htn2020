@@ -33,18 +33,6 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Serve static assets if in production
-if (process.env.NODE_ENV === "production") {
-  // Set static folder
-  // All the javascript and css files will be read and served from this folder
-  app.use(express.static(path.join(__dirname, "../client/build")));
-
-  // index.html for all page routes    html or routing and naviagtion
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));
-  });
-}
-
 UserModel.sync().then(() => {
   console.log(`User table created!`);
 });
@@ -66,6 +54,18 @@ app.use("/api/users", usersRouter);
 app.use("/api/thread", threadRouter);
 app.use("/api/contribution", contributionRouter);
 app.use("/api/auth", authRouter);
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  // All the javascript and css files will be read and served from this folder
+  app.use(express.static(path.join(__dirname, "../client/build")));
+
+  // index.html for all page routes    html or routing and naviagtion
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client/build", "index.html"));
+  });
+}
 
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`);
