@@ -35,7 +35,7 @@ function Register(props) {
         confirmPassword: '',
       }}
       validationSchema={Yup.object().shape({
-        name: Yup.string().required('Please enter your name'),
+        name: Yup.string().required('Please enter a username'),
         password: Yup.string()
           .min(6, 'Password must be at least 6 characters')
           .required('Please enter a password'),
@@ -97,12 +97,12 @@ function Register(props) {
                 <Field name="name">
                   {({field, form}) => (
                     <FormControl isInvalid={form.errors.name && form.touched.name} id="name" mt={2}>
-                      <FormLabel htmlFor="name">Name</FormLabel>
+                      <FormLabel htmlFor="name">Username</FormLabel>
                       <Input
                         {...field}
                         focusBorderColor="purple.500"
                         type="text"
-                        placeholder="First and last name"
+                        placeholder="Username"
                       />
                       <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                     </FormControl>

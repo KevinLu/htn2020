@@ -3,6 +3,7 @@ const router = express.Router();
 const dropbase = require("../services/dropbase");
 const fs = require("fs");
 const axios = require("axios");
+const passport = require("passport");
 
 const User = require("../models/User");
 const Thread = require("../models/Thread");
@@ -47,14 +48,17 @@ router.get("/:id/comments", (req, res) => {
 
   Thread.findByPk(threadId).then((thread, err) => {
     if (thread) {
-      res.json(thread.comments);
+      Promise.all(thread.comments.map(commentId => Comment.findByPk(commentId))).then(comments => {
+        console.log(comments);
+        res.send(comments);
+      })
     } else {
       res.send("Thread not found. Error: " + JSON.stringify(err));
     }
   });
 });
 
-router.post("/:id/comments", async (req, res) => {
+router.post("/:id/comments", passport.authMiddleware, async (req, res) => {
   const threadId = req.params.id;
 
   var username = null;
@@ -89,7 +93,7 @@ router.post("/:id/comments", async (req, res) => {
   res.send(finalThread);
 });
 
-router.post("/:id/contributions", async (req, res) => {
+router.post("/:id/contributions", passport.authMiddleware, async (req, res) => {
   const threadId = req.params.id;
 
   var username = null;
@@ -115,6 +119,7 @@ router.post("/:id/contributions", async (req, res) => {
     user: userId,
     description: description,
     fileUrl: file,
+    fileSize: fileSize
   });
   const uuid = contribObj.uuid;
 
@@ -148,7 +153,7 @@ router.get("/threads", async (req, res) => {
   res.send(threads);
 });
 
-router.post("/new", async (req, res) => {
+router.post("/new", passport.authMiddleware, async (req, res) => {
   var userId = null;
   if (req.user) {
     userId = req.user.uuid;

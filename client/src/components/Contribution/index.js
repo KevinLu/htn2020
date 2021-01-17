@@ -1,14 +1,17 @@
 import React from 'react';
 import {Button, Flex, Avatar, Text, HStack} from '@chakra-ui/react';
 
-function Contribution() {
-  const data = {
+function Contribution(props) {
+  /*const data = {
     username: "User Name",
     avatar: "",
     fileSize: "325kb",
     description: "I added some epic data to this thread, please check it.",
     timeSince: "2 days",
-  };
+  };*/
+
+  const data = props.data;
+
   return (
     <Flex
       borderWidth="1px"

@@ -72,4 +72,5 @@ router.post('/register', (req, res) => {
     });
 });
 
+passport.authMiddleware = authMiddleware
 module.exports = router;

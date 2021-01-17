@@ -2,28 +2,29 @@ import React, {useEffect, useState} from 'react';
 import {Flex, Textarea, Text, Button, Avatar, HStack} from '@chakra-ui/react';
 import Axios from "axios";
 
-function postMessage(threadId, comment) {
-
-    console.log(comment);
-
-    // todo use threadid
-    Axios.post("/api/thread/8402b2b4-8dea-4c59-84e8-787af17ee33d/comments",
-        {
-            comment: comment
-        })
-        .then(res => {
-            console.log("posted");
-        });
-}
-
 function CommentBox(props) {
     //const threadId = props.threadId;
     let [value, setValue] = React.useState("")
-    const threadId = "8402b2b4-8dea-4c59-84e8-787af17ee33d";
+    let [isLoading, setIsLoading] = React.useState(false)
+
+    const threadId = "27d9837a-d583-4ed6-8f39-7c1ee32f115a";
     const defaultData = {
         username: "Anonymous",
         avatar: "",
     };
+
+    function postMessage(threadId, comment) {
+        setIsLoading(true);
+
+        // todo use threadid
+        Axios.post("/api/thread/" + threadId + "/comments",
+            {
+                comment: comment
+            })
+            .then(res => {
+                window.location.reload();
+            });
+    }
 
     let handleInputChange = (e) => {
         let inputValue = e.target.value
@@ -49,7 +50,9 @@ function CommentBox(props) {
                       placeholder="Write your thoughts about this data request..."
                       value={value}
                       onChange={handleInputChange}/>
-            <Button onClick={() => postMessage(threadId, value)} colorScheme="purple"
+            <Button isLoading={isLoading} onClick={() => {
+                postMessage(threadId, value);
+            }} colorScheme="purple"
                     mt={2}>Post</Button>
         </Flex>
     );

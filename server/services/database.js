@@ -3,11 +3,11 @@ var fs = require("fs");
 
 // Connect to CockroachDB through Sequelize.
 const sequelize = new Sequelize(
-  "nice-puma-270.defaultdb",
+  "defaultdb",
   "kevin",
   "K4OJov8KbV3clDKY",
   {
-    host: "free-tier.gcp-us-central1.cockroachlabs.cloud",
+    host: "nice-puma-270-7md.aws-us-east-2.cockroachlabs.cloud",
     dialect: "postgres",
     port: 26257,
     logging: false,
