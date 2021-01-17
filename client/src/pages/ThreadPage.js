@@ -34,14 +34,14 @@ function ThreadPage(props) {
       })
       .catch(err => {
         if (err.response) {
-          // toast({
-          //   title: 'Failed to retrieve user',
-          //   description: 'Server error.',
-          //   position: 'top',
-          //   status: 'error',
-          //   duration: 9000,
-          //   isClosable: true,
-          // });
+          toast({
+            title: 'Failed to retrieve user',
+            description: 'Server error.',
+            position: 'top',
+            status: 'error',
+            duration: 9000,
+            isClosable: true,
+          });
           console.log(err.response)
         }
       });
