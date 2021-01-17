@@ -13,8 +13,8 @@ const HoverEffect = styled.div`
 `;
 
 function Thread(props) {
-  // const {data} = props;
-  const data = {
+  const {data} = props;
+  /*const data = {
     threadUrl: "the-thread-url",
     title: "Need custom datasets for research purposes",
     timeSince: "5 hours",
@@ -23,7 +23,7 @@ function Thread(props) {
     contributionCount: 16,
     rating: 20,
     vote: "up",
-  }
+  }*/
 
   return (
     <HoverEffect>

@@ -115,11 +115,9 @@ router.get("/threads", async (req, res) => {
     limit: limit,
   });
 
-  if (threads) {
-    return threads;
-  } else {
-    return "bad request";
-  }
+  console.log("thread req");
+
+  res.send(threads);
 });
 
 router.post("/new", async (req, res) => {
@@ -133,7 +131,7 @@ router.post("/new", async (req, res) => {
     title: title,
     description: description,
     dropbaseApi: dropbaseApi,
-  }).then((thread, err2) => {
+  }).then((thread, err) => {
     res.send(thread);
   });
 });
