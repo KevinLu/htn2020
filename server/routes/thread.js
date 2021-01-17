@@ -58,11 +58,13 @@ router.get("/:id/comments", (req, res) => {
         return res.send([]);
       }
 
-      Promise.all(thread.comments.map(commentId => {
-        Comment.findByPk(commentId);
-      })).then(comments => {
+      Promise.all(
+        thread.comments.map((commentId) => {
+          Comment.findByPk(commentId);
+        })
+      ).then((comments) => {
         res.send(comments);
-      })
+      });
     } else {
       res.send("Thread not found. Error: " + JSON.stringify(err));
     }
@@ -72,7 +74,7 @@ router.get("/:id/comments", (req, res) => {
 router.post("/:id/comments", passport.authMiddleware(), async (req, res) => {
   const threadId = req.params.id;
 
-  console.log("new comment in " + threadId)
+  console.log("new comment in " + threadId);
 
   var username = null;
   var avatar = null;
@@ -103,58 +105,65 @@ router.post("/:id/comments", passport.authMiddleware(), async (req, res) => {
   }
 
   mainThread.comments = commentsArr;
-  
-  const finalThread = await mainThread.save();
-
-  res.send(finalThread);
-});
-
-router.post("/:id/contributions", passport.authMiddleware(), async (req, res) => {
-  const threadId = req.params.id;
-
-  var username = null;
-  var avatar = null;
-  if (req.user) {
-    username = req.user.username;
-    avatar = req.user.avatar;
-  }
-  const description = req.body.description;
-  const file = req.body.fileUrl;
-
-  var fileSize = 0;
-  try {
-    const response = await axios.head(file);
-    fileSize = response.headers["content-length"];
-  } catch (e) {
-    console.log(e);
-  }
-
-  var mainThread = await Thread.findByPk(threadId);
-
-  var contribObj = await Contribution.create({
-    username: username,
-    avatar: avatar,
-    description: description,
-    fileUrl: file,
-    fileSize: fileSize
-  });
-  const uuid = contribObj.uuid;
-
-  var contribArr;
-
-  if (mainThread.contributions != null) {
-    contribArr = [...mainThread.contributions];
-    contribArr.push(uuid);
-  } else {
-    contribArr = [uuid];
-  }
-
-  mainThread.contributions = contribArr;
 
   const finalThread = await mainThread.save();
 
   res.send(finalThread);
 });
+
+router.post(
+  "/:id/contributions",
+  passport.authMiddleware(),
+  async (req, res) => {
+    const threadId = req.params.id;
+
+    var username = null;
+    var avatar = null;
+    if (req.user) {
+      username = req.user.username;
+      avatar = req.user.avatar;
+    }
+    const description = req.body.description;
+    const file = req.body.fileUrl;
+
+    var fileSize = 0;
+    try {
+      const response = await axios.head(file);
+      fileSize = response.headers["content-length"];
+    } catch (e) {
+      console.log(e);
+    }
+
+    var mainThread = await Thread.findByPk(threadId);
+    const dropbaseApi = mainThread.dropbaseApi;
+
+    var contribObj = await Contribution.create({
+      username: username,
+      avatar: avatar,
+      description: description,
+      fileUrl: file,
+      fileSize: fileSize,
+    });
+    const uuid = contribObj.uuid;
+
+    var contribArr;
+
+    if (mainThread.contributions != null) {
+      contribArr = [...mainThread.contributions];
+      contribArr.push(uuid);
+    } else {
+      contribArr = [uuid];
+    }
+
+    mainThread.contributions = contribArr;
+
+    const finalThread = await mainThread.save();
+
+    const jobId = await dropbase.runPipelineUrl(dropbaseApi, file);
+
+    res.send({ ...finalThread, dropbaseJobId: jobId });
+  }
+);
 
 router.get("/threads", async (req, res) => {
   const offset = req.query.offset;
@@ -162,7 +171,7 @@ router.get("/threads", async (req, res) => {
   const threads = await Thread.findAll({
     offset: offset,
     limit: limit,
-    order: [['updatedAt', 'DESC']] 
+    order: [["updatedAt", "DESC"]],
   });
 
   console.log("thread req");
@@ -180,6 +189,8 @@ router.post("/new", passport.authMiddleware(), async (req, res) => {
   const dropbaseApi = req.body.pipelineToken;
   const fileUrl = req.body.fileUrl;
 
+  const jobId = await dropbase.runPipelineUrl(dropbaseApi, fileUrl);
+
   Thread.create({
     user: userId,
     title: title,
@@ -187,7 +198,7 @@ router.post("/new", passport.authMiddleware(), async (req, res) => {
     dropbaseApi: dropbaseApi,
     fileUrl: fileUrl,
   }).then((thread, err2) => {
-    res.send(thread);
+    res.send({ ...thread, dropbaseJobId: jobId });
   });
 });
 
