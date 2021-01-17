@@ -11,6 +11,8 @@ function RightMenu() {
     if (window.localStorage.getItem("loggedIn") === "true") {
       setLoggedIn(true);
       setIsLoading(false);
+    } else if (window.localStorage.getItem("loggedIn") === "false") {
+      setIsLoading(false);
     }
   }, [window.localStorage]);
 
