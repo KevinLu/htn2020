@@ -5,6 +5,8 @@ import ContributionList from '../components/ContributionList';
 import CommentList from '../components/CommentList';
 
 function ThreadPage(props) {
+  const threadId = props.threadId
+
   useEffect(() => {
     document.body.style.backgroundColor = "#EDF2F7";
     return (() => {
@@ -64,7 +66,7 @@ function ThreadPage(props) {
         </HStack>
       </Container>
       <ContributionList mb={2} />
-      <CommentList />
+      <CommentList threadId={threadId} />
     </Box>
   );
 }

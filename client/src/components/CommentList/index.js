@@ -3,7 +3,8 @@ import {Text, Container, VStack, HStack} from '@chakra-ui/react';
 import Comment from '../Comment';
 import CommentBox from '../CommentBox';
 
-function CommentList() {
+function CommentList(props) {
+    const threadId = props.threadId
   return (
     <Container
       p={6}
@@ -16,7 +17,7 @@ function CommentList() {
           Discussion
         </Text>
       </HStack>
-      <CommentBox />
+      <CommentBox threadId={threadId} />
       <VStack mt="3" spacing={4}>
         <Comment />
         <Comment />
