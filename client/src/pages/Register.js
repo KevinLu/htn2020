@@ -9,6 +9,7 @@ import {
   Input,
   Button,
   Divider,
+  useToast,
 } from '@chakra-ui/react';
 import {Formik, Field} from 'formik';
 import {Link} from 'react-router-dom';
@@ -16,7 +17,9 @@ import * as Yup from 'yup';
 import Axios from 'axios';
 import {FaFacebook, FaGoogle} from 'react-icons/fa';
 
-function Register() {
+function Register(props) {
+  const toast = useToast();
+
   useEffect(() => {
     document.body.style.backgroundColor = "#EDF2F7";
     return (() => {
@@ -46,17 +49,34 @@ function Register() {
             username: values.name,
             password: values.password,
           };
-          console.log(dataToSubmit)
           Axios.post('/api/auth/register', dataToSubmit)
             .then(response => {
-              // TODO: auto login user after registering or redirect
-              console.log(response);
+              if (response.status === 200 && response.data.username === dataToSubmit.username) {
+                props.history.push('/login');
+                toast({
+                  title: 'Sign up succeeded.',
+                  description: 'Welcome aboard! Now login here.',
+                  position: 'top',
+                  status: 'success',
+                  duration: 9000,
+                  isClosable: true,
+                });
+              }
             })
             .catch(err => {
-              console.log(err);
+              if (err.response.data) {
+                toast({
+                  title: 'Sign up failed.',
+                  description: err.response.data.message || 'Server error.',
+                  position: 'top',
+                  status: 'error',
+                  duration: 9000,
+                  isClosable: true,
+                });
+              }
             });
           setSubmitting(false);
-        }, 500);
+        }, 250);
       }}
     >
       {props => (
