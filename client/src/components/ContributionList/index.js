@@ -4,8 +4,10 @@ import Contribution from '../Contribution';
 import ContributeModal from '../ContributeModal';
 
 function ContributionList(props) {
+  const threadId = props.threadId;
   const {isOpen, onOpen, onClose} = useDisclosure();
   const {mb} = props;
+
   return (
     <Container
       mb={mb}

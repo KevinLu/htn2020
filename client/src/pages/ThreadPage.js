@@ -15,7 +15,7 @@ import axios from "axios";
 import {toast} from '@chakra-ui/react';
 
 function ThreadPage(props) {
-  const threadId = props.threadId;
+  const threadId = props.location.state.threadUrl;
 
   useEffect(() => {
     document.body.style.backgroundColor = '#EDF2F7';
@@ -101,7 +101,7 @@ function ThreadPage(props) {
           </Flex>
         </HStack>
       </Container>
-      <ContributionList mb={2} />
+      <ContributionList threadId={threadId} mb={2} />
       <CommentList threadId={threadId} />
     </Box>
   );

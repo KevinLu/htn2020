@@ -12,6 +12,7 @@ import {
 
 function index(props) {
   const {isOpen, onClose} = props;
+
   return (
     <div>
       <Modal isOpen={isOpen} onClose={onClose}>

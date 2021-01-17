@@ -47,7 +47,10 @@ router.get("/:id/comments", (req, res) => {
 
   Thread.findByPk(threadId).then((thread, err) => {
     if (thread) {
-      res.json(thread.comments);
+      Promise.all(thread.comments.map(commentId => Comment.findByPk(commentId))).then(comments => {
+        console.log(comments);
+        res.send(comments);
+      })
     } else {
       res.send("Thread not found. Error: " + JSON.stringify(err));
     }
