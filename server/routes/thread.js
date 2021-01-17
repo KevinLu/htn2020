@@ -138,17 +138,9 @@ router.get("/threads", async (req, res) => {
     order: [['updatedAt', 'DESC']] 
   });
 
-  var threadArr = [];
-  await threads.forEach(async (thread, i) => {
-    const uuid = thread.dataValues.user;
-    const user = await User.findByPk(uuid);
-    threadArr.push({
-      ...thread.dataValues,
-      user: user
-    })
-    i == threads.length - 1 ? res.send(threadArr) : console.log();
-  })
-  
+  console.log("thread req");
+
+  res.send(threads);
 });
 
 router.post("/new", async (req, res) => {
