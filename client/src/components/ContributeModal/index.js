@@ -72,9 +72,6 @@ function ContributeModal(props) {
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
 
-function ContributionModal(props) {
-  const {isOpen, onClose, threadId} = props;
-
   return (
     <div>
       <Modal isOpen={isOpen} onClose={onClose}>

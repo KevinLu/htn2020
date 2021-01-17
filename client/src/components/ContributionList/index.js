@@ -24,7 +24,7 @@ function getRelativeTime(date) {
 function ContributionList(props) {
   const threadId = props.threadId;
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const {mb, threadId} = props;
+  const {mb} = props;
 
   const [contributions, setContributions] = useState([]);
 
