@@ -107,3 +107,4 @@ dist
 /cockroach-data
 /node1
 server/config/dev.js
+server/config/cc-ca.crt.txt

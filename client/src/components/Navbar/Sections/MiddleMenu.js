@@ -10,10 +10,10 @@ function MiddleMenu() {
           <Link to="/">Threads</Link>
         </Text>
         <Text color="gray.600" fontSize="lg">
-          <Link to="/">About us</Link>
+          <a href="https://devpost.com/software/crowd-space">About us</a>
         </Text>
         <Text color="gray.600" fontSize="lg">
-          <Link to="/">Source code</Link>
+          <a href="https://github.com/KevinLu/htn2020">Source code</a>
         </Text>
       </HStack>
     </Flex>

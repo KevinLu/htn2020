@@ -1,5 +1,8 @@
 # crowd.data
 
+### Try it out
+https://crowddata.herokuapp.com/
+
 ## Inspiration
 
 In the current age of digital technology, data is everywhere. Machine learning and artificial intelligence researchers can ask the public for data to train models, and analysts can conduct market research for free! We want to develop a platform to allow users from anywhere contribute and compile data together! This allows for easy access of free crowd sourced data that anyone can contribute to.
@@ -24,8 +27,8 @@ We are proud that we were able to have a working product in the end.
 
 ## What we learned
 
-We learned how to use a new database, CockroachDB! We also learned how to develop an authentication system for users to sign up and log in.
+We learned how to use a new database, CockroachDB! We learned how to use the Dropbase API and how to upload files via HTTP requests. We also learned how to develop an authentication system for users to sign up and log in.
 
-## What's next for crowd.space
+## What's next for crowd.data
 
 There are some limitations of the DropBase API, such as not being able to create a pipeline and get the pipeline token from the API. In the future, when the API gets updated, we hope to be able to make the process of uploading data and starting a thread even simpler by allowing users to interact solely on our platform. Then we can take care of the rest in the backend. In addition, we would like to allow the original poster of a thread to accept or reject data submissions. This ensures that all contributions are valid according to the OP as well.

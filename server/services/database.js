@@ -1,5 +1,6 @@
 var Sequelize = require("sequelize-cockroachdb");
 var fs = require("fs");
+const {cockroachSSL} = require('../config/key');
 
 // Connect to CockroachDB through Sequelize.
 const sequelize = new Sequelize(
@@ -13,7 +14,7 @@ const sequelize = new Sequelize(
     logging: false,
     dialectOptions: {
       ssl: {
-        ca: fs.readFileSync("C:/cc-ca.crt.txt").toString(),
+        ca: cockroachSSL,
       },
     },
   }
