@@ -59,7 +59,7 @@ function ContributeModal(props) {
           isClosable: true,
         });
 
-        props.updateContributions();
+        //props.updateContributions();
       } else {
         toast({
           position: 'bottom',
