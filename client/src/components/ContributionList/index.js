@@ -34,18 +34,17 @@ function ContributionList(props) {
             let newContributions = [];
 
             response.data.forEach((contribution, index) => {
-              console.log(contribution);
-
               newContributions[index] = {
                 avatar: contribution.avatar,
                 username: contribution.username,
                 timeSince: getRelativeTime(contribution.createdAt),
                 description: contribution.description,
+                fileUrl: contribution.fileUrl,
                 fileSize: contribution.fileSize / 1000 + "kb"
               };
             });
 
-            setContributions(newContributions);
+            setContributions(newContributions.reverse());
           }
         })
         .catch(err => {

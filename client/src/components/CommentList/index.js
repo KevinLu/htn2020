@@ -19,18 +19,17 @@ function CommentList(props) {
         Axios.get("/api/thread/" + threadId + "/comments")
             .then(res => {
                 let newComments = [];
-                console.log(res.data);
 
                 res.data.forEach((comment, index) => {
                     newComments[index] = {
-                        username: comment.user.username,
-                        avatar: comment.user.avatar,
+                        username: comment.username,
+                        avatar: comment.avatar,
                         comment: comment.comment,
                         timeSince: getRelativeTime(comment.createdAt)
                     };
                 });
 
-                setComments(newComments);
+                setComments(newComments.reverse());
             })
             .catch(err => {
                 if (err.response) {
@@ -61,7 +60,6 @@ function CommentList(props) {
       <CommentBox threadId={threadId} />
       <VStack mt="3" spacing={4}>
           { comments.map(comment => {
-              console.log(comment);
               return <Comment key={comment.uuid} data={comment} />
           })}
       </VStack>

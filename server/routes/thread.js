@@ -41,6 +41,7 @@ router.get("/:id/contributions", (req, res) => {
       }
 
       const contributions = await Promise.all(thread.contributions.map(id => Contribution.findByPk(id)))
+
       res.send(contributions);
     } else {
       res.send("Thread not found. Error: " + JSON.stringify(err));
@@ -53,9 +54,8 @@ router.get("/:id/comments", (req, res) => {
 
   Thread.findByPk(threadId).then(async (thread, err) => {
     if (thread) {
-      const comments = await Promise.all(thread.comments.map(commentId => Comment.findByPk(commentId)))
+      const comments = await Promise.all(thread.comments.map(commentId => Comment.findOne({where: {uuid: commentId}})))
 
-      console.log(comments);
       res.send(comments);
     } else {
       res.send("Thread not found. Error: " + JSON.stringify(err));
@@ -65,8 +65,6 @@ router.get("/:id/comments", (req, res) => {
 
 router.post("/:id/comments", passport.authMiddleware(), async (req, res) => {
   const threadId = req.params.id;
-
-  console.log("new comment in " + threadId);
 
   var username = null;
   var avatar = null;
@@ -165,8 +163,6 @@ router.get("/threads", async (req, res) => {
     limit: limit,
     order: [["createdAt", "DESC"]],
   });
-
-  console.log("thread req");
 
   res.send(threads);
 });
