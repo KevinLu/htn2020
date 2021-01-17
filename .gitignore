@@ -107,4 +107,4 @@ dist
 /cockroach-data
 /node1
 
-/config/dev.js
+server/config/dev.js
