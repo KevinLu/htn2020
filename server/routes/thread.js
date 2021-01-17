@@ -9,7 +9,7 @@ const Thread = require("../models/Thread");
 const Comment = require("../models/Comment");
 const Contribution = require("../models/Contribution");
 
-router.get("/:threadId", (req, res) => {
+router.get("/view/:threadId", (req, res) => {
   const threadId = req.params.threadId;
   // respond with posts and data in the thread
   res.json(threadId);

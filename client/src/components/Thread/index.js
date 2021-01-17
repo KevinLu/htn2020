@@ -26,63 +26,61 @@ function Thread(props) {
   }*/
 
   return (
-    <HoverEffect>
-      <HStack w="100%" borderWidth="1px" borderRadius="lg" overflow="hidden" spacing="0">
-        <Box pl="4">
-          <RatingBox rating={data.rating} vote={data.vote} />
-        </Box>
-        <Box p={4}>
-          <Link to={`/thread/${data.threadUrl}`}>
-            <Box>
-              <Box d="flex" alignItems="baseline">
-                <Badge borderRadius="full" px="2" colorScheme="blue">
-                  New
+    <HStack w="100%" borderWidth="1px" borderRadius="lg" overflow="hidden" spacing="0">
+      <Box pl="4">
+        <RatingBox rating={data.rating} vote={data.vote} />
+      </Box>
+      <Box p={4}>
+        <Link to={`/thread/${data.threadUrl}`}>
+          <Box>
+            <Box d="flex" alignItems="baseline">
+              <Badge borderRadius="full" px="2" colorScheme="blue">
+                New
                 </Badge>
-                <Box
-                  color="gray.500"
-                  fontWeight="semibold"
-                  letterSpacing="wide"
-                  fontSize="xs"
-                  textTransform="uppercase"
-                  ml="2"
-                >
-                  {data.timeSince} ago
-                </Box>
-              </Box>
-
               <Box
-                mt="1"
+                color="gray.500"
                 fontWeight="semibold"
-                as="h4"
-                lineHeight="tight"
-                isTruncated
+                letterSpacing="wide"
+                fontSize="xs"
+                textTransform="uppercase"
+                ml="2"
               >
-                {data.title}
-              </Box>
-
-              <Box color="gray.600" fontSize="sm">
-                {data.description}
-              </Box>
-
-              <HStack mt="3" spacing={4}>
-                <Flex alignItems="center">
-                  <StarIcon color={"purple.500"} />
-                  <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                    {data.contributionCount} contributions
-                  </Box>
-                </Flex>
-                <Flex alignItems="center">
-                  <ChatIcon color={"purple.500"} />
-                  <Box as="span" ml="2" color="gray.600" fontSize="sm">
-                    {data.commentCount} comments
-                  </Box>
-                </Flex>
-              </HStack>
+                {data.timeSince} ago
+                </Box>
             </Box>
-          </Link>
-        </Box>
-      </HStack>
-    </HoverEffect>
+
+            <Box
+              mt="1"
+              fontWeight="semibold"
+              as="h4"
+              lineHeight="tight"
+              isTruncated
+            >
+              {data.title}
+            </Box>
+
+            <Box color="gray.600" fontSize="sm">
+              {data.description}
+            </Box>
+
+            <HStack mt="3" spacing={4}>
+              <Flex alignItems="center">
+                <StarIcon color={"purple.500"} />
+                <Box as="span" ml="2" color="gray.600" fontSize="sm">
+                  {data.contributionCount} contributions
+                  </Box>
+              </Flex>
+              <Flex alignItems="center">
+                <ChatIcon color={"purple.500"} />
+                <Box as="span" ml="2" color="gray.600" fontSize="sm">
+                  {data.commentCount} comments
+                  </Box>
+              </Flex>
+            </HStack>
+          </Box>
+        </Link>
+      </Box>
+    </HStack>
   );
 }
 
