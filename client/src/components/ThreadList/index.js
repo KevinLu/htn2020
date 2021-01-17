@@ -50,7 +50,7 @@ function ThreadList() {
 
   console.log("threads state", threads);
   return (
-    <VStack spacing={4}>
+    <VStack spacing={4} mb={16}>
       { threads.map(thread => {
         console.log("something");
         return <Thread data={thread} />
