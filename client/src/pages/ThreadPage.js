@@ -42,7 +42,7 @@ function ThreadPage(props) {
           <Avatar size="sm" name={data.user} src={data.avatar} />
           <Text fontWeight="semibold" ml="2">{data.user}</Text>
           <Text color="gray.500" ml="2">
-            posted {data.timeSince} ago
+            posted {data.timeSince}
           </Text>
         </Flex>
         <Text>
