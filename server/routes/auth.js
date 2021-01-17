@@ -4,6 +4,22 @@ const passport = require("passport");
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 
+const authMiddleware = (req, res, next) => {
+  console.log(req.isAuthenticated());
+  // If user is not logged in
+  if (!req.isAuthenticated()) {
+    // NOTE: THIS RETURNS WITH STATUS CODE 200
+    return res.status(400).json({message: "not logged in."});
+  }
+  // User is logged in, call next middleware
+  next();
+};
+
+/* GET /api/auth/ retrieve user info */
+router.get('/', authMiddleware, (req, res) => {
+  return res.status(200).json({user: req.user});
+});
+
 router.post('/login', function (req, res, next) {
   passport.authenticate('local',
     {
@@ -50,9 +66,9 @@ router.post('/register', (req, res) => {
     })
     .catch(err => {
       if (err.name === "SequelizeUniqueConstraintError") {
-        return(res.status(400).json({message: "username already exists!"}));
+        return (res.status(400).json({message: "username already exists!"}));
       }
-      return(res.status(400).json(err));
+      return (res.status(400).json(err));
     });
 });
 
