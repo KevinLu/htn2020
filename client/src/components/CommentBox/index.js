@@ -3,11 +3,10 @@ import {Flex, Textarea, Text, Button, Avatar, HStack} from '@chakra-ui/react';
 import Axios from "axios";
 
 function CommentBox(props) {
-    //const threadId = props.threadId;
+    const threadId = props.threadId;
     let [value, setValue] = React.useState("")
     let [isLoading, setIsLoading] = React.useState(false)
 
-    const threadId = "27d9837a-d583-4ed6-8f39-7c1ee32f115a";
     const defaultData = {
         username: "Anonymous",
         avatar: "",
@@ -16,13 +15,16 @@ function CommentBox(props) {
     function postMessage(threadId, comment) {
         setIsLoading(true);
 
-        // todo use threadid
         Axios.post("/api/thread/" + threadId + "/comments",
             {
                 comment: comment
             })
             .then(res => {
-                window.location.reload();
+                console.log("sent!");
+                setIsLoading(false);
+            })
+            .catch(err => {
+                setIsLoading(false);
             });
     }
 
