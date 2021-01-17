@@ -6,7 +6,7 @@ function LeftMenu() {
   return (
     <Flex align="center">
       <Heading as="h1" size="lg" letterSpacing={"-.1rem"}>
-        <Link to="/">crowd.source</Link>
+        <Link to="/">crowd.data</Link>
       </Heading>
     </Flex>
   );

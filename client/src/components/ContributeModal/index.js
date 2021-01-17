@@ -206,19 +206,10 @@ function ContributeModal(props) {
                     <Button
                       mt={4}
                       colorScheme="purple"
-                      isLoading={props.isSubmitting}
-                      type="submit"
-                    >
-                      Submit
-                    </Button>
-                    <Button
-                      mt={4}
-                      colorScheme="blue"
                       type="close"
                       onClick={onClose}
-                      style={{ marginLeft: '20px' }}
                     >
-                      Close
+                      Submit
                     </Button>
                   </Form>
                 </Box>

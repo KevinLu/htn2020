@@ -40,7 +40,9 @@ router.get("/:id/contributions", (req, res) => {
         return res.json([]);
       }
 
-      const contributions = await Promise.all(thread.contributions.map(id => Contribution.findByPk(id)))
+      const contributions = await Promise.all(
+        thread.contributions.map((id) => Contribution.findByPk(id))
+      );
 
       res.send(contributions);
     } else {
@@ -54,7 +56,11 @@ router.get("/:id/comments", (req, res) => {
 
   Thread.findByPk(threadId).then(async (thread, err) => {
     if (thread && thread.comments) {
-      const comments = await Promise.all(thread.comments.map(commentId => Comment.findOne({where: {uuid: commentId}})))
+      const comments = await Promise.all(
+        thread.comments.map((commentId) =>
+          Comment.findOne({ where: { uuid: commentId } })
+        )
+      );
 
       res.send(comments);
     } else {
@@ -148,8 +154,11 @@ router.post(
     mainThread.contributions = contribArr;
 
     const finalThread = await mainThread.save();
-
-    const jobId = await dropbase.runPipelineUrl(dropbaseApi, file);
+    
+    var jobId;
+    try {
+      jobId = await dropbase.runPipelineUrl(dropbaseApi, file);
+    } catch (e) {}
 
     res.send({ ...finalThread.dataValues, dropbaseJobId: jobId });
   }
@@ -177,7 +186,10 @@ router.post("/new", passport.authMiddleware(), async (req, res) => {
   const dropbaseApi = req.body.pipelineToken;
   const fileUrl = req.body.fileUrl;
 
-  const jobId = await dropbase.runPipelineUrl(dropbaseApi, fileUrl);
+  var jobId = null;
+  try {
+    jobId = await dropbase.runPipelineUrl(dropbaseApi, fileUrl);
+  } catch (e) {}
 
   Thread.create({
     user: userId,
