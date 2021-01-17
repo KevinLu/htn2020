@@ -153,7 +153,7 @@ router.post(
 
     const jobId = await dropbase.runPipelineUrl(dropbaseApi, file);
 
-    res.send({ ...finalThread, dropbaseJobId: jobId });
+    res.send({ ...finalThread.dataValues, dropbaseJobId: jobId });
   }
 );
 
@@ -190,7 +190,7 @@ router.post("/new", passport.authMiddleware(), async (req, res) => {
     dropbaseApi: dropbaseApi,
     fileUrl: fileUrl,
   }).then((thread, err2) => {
-    res.send({ ...thread, dropbaseJobId: jobId });
+    res.send({ ...thread.dataValues, dropbaseJobId: jobId });
   });
 });
 
