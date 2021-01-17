@@ -44,7 +44,7 @@ function ContributionList(props) {
               };
             });
 
-            setContributions(newContributions);
+            setContributions(newContributions.reverse());
           }
         })
         .catch(err => {

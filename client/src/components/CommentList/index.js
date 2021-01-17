@@ -29,7 +29,7 @@ function CommentList(props) {
                     };
                 });
 
-                setComments(newComments);
+                setComments(newComments.reverse());
             })
             .catch(err => {
                 if (err.response) {
@@ -59,7 +59,7 @@ function CommentList(props) {
       </HStack>
       <CommentBox threadId={threadId} />
       <VStack mt="3" spacing={4}>
-          { comments.reverse().map(comment => {
+          { comments.map(comment => {
               return <Comment key={comment.uuid} data={comment} />
           })}
       </VStack>
