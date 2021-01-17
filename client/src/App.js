@@ -10,6 +10,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ThreadPage from './pages/ThreadPage';
 import CreateThread from './pages/CreateThread';
+import ErrorPage from './pages/ErrorPage';
+
 
 const theme = extendTheme({
   fonts: {
@@ -39,6 +41,7 @@ function App() {
               <Route exact path="/register" component={AuthHOC(Register, PUBLIC_ONLY)} />
               <Route exact path="/thread/:threadUrl" component={AuthHOC(ThreadPage, PUBLIC_PAGE)} />
               <Route exact path="/create/thread" component={AuthHOC(CreateThread, LOGGED_IN_ONLY)} />
+              <Route exact path="/*" component={AuthHOC(ErrorPage, PUBLIC_PAGE)} />
             </Switch>
           </NavBar>
         </Router>
