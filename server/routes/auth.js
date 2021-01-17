@@ -25,8 +25,8 @@ router.get('/', authMiddleware(), (req, res) => {
 router.post('/login', function (req, res, next) {
   passport.authenticate('local',
     {
-      failureRedirect: 'http://localhost:3000/login/',
-      successRedirect: 'http://localhost:3000/',
+      failureRedirect: '/login',
+      successRedirect: '/',
     },
     function (err, user) {
       if (err) {
