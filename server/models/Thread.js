@@ -37,6 +37,7 @@ var Thread = sequelize.define("threads", {
     defaultValue: 0
   },
   dropbaseApi: { type: Sequelize.STRING },
+  fileUrl: { type: Sequelize.STRING },
 });
 
 module.exports = Thread;
