@@ -45,7 +45,7 @@ function Thread(props) {
                 textTransform="uppercase"
                 ml="2"
               >
-                {data.timeSince} ago
+                {data.timeSince}
                 </Box>
             </Box>
 

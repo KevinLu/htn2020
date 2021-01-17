@@ -16,7 +16,7 @@ import * as Yup from 'yup';
 import Axios from 'axios';
 import {useDropzone} from 'react-dropzone';
 
-function CreateThread() {
+function CreateThread(props) {
   const uploadUrl = '/api/contribution/upload';
   const [Files, setFiles] = useState([]);
   const toast = useToast();
@@ -87,8 +87,10 @@ function CreateThread() {
           console.log(dataToSubmit)
           Axios.post('/api/thread/new', dataToSubmit)
             .then(response => {
-
               console.log(response);
+              if (response.status === 200) {
+                props.history.push('/');
+              }
             })
             .catch(err => {
               console.log(err);
