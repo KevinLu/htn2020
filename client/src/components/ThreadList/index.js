@@ -7,26 +7,24 @@ function ThreadList() {
     const [threads, setThreads] = useState([]);
 
     useEffect(() => {
-        Axios.get('/api/thread/threads?offset=0&limit=100', {})
+        Axios.get('/api/thread/threads?offset=0&limit=100')
             .then(response => {
-                console.log(response);
                 if (response.status === 200) {
-                    let threads = [];
-
-                    response.data.forEach(thread => {
-                        threads.push({
+                    console.log("response.data", response.data);
+                    let newthreads = [];
+                    response.data.forEach((thread, index) => {
+                        newthreads[index] = {
                             threadUrl: thread.threadUrl,
                             title: thread.title,
                             timeSince: "5 hours",
                             description: thread.description,
-                            commentCount: thread.comments.length,
-                            contributionCount: thread.contributions.length,
-                            rating: thread.rating,
+                            commentCount: thread.comments ? thread.comments : 0,
+                            contributionCount: thread.contributions ? thread.contributions : 0,
+                            rating: thread.rating ? thread.rating : 0,
                             vote: "up"
-                        });
-                    })
-
-                    setThreads(threads);
+                        };
+                    });
+                    setThreads(newthreads);
                 }
             })
             .catch(err => {
@@ -43,12 +41,12 @@ function ThreadList() {
             })
     }, []);
 
-    console.log(threads);
+    console.log("threads state", threads);
     return (
         <VStack spacing={4}>
             { threads.map(thread => {
                 console.log("something");
-                return <Thread props={thread}/>
+                return <Thread data={thread}/>
             }) }
         </VStack>
     );
