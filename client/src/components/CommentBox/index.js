@@ -1,11 +1,18 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Flex, Textarea, Text, Button, Avatar, HStack} from '@chakra-ui/react';
 
 function CommentBox() {
-  const data = {
-    username: "Kevin Lu",
+  const defaultData = {
+    username: "Anonymous",
     avatar: "",
   };
+  const [data, setData] = useState(defaultData);
+  useEffect(() => {
+    setData({
+      username: window.localStorage.getItem("username"),
+      avatar: window.localStorage.getItem("avatar"),
+    });
+  }, [window.localStorage]);
   return (
     <Flex mt={4} mb={4} flexDir="column">
       <HStack>
