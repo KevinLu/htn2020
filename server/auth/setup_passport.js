@@ -19,7 +19,6 @@ passport.serializeUser(function(user, done){
 });
 
 passport.deserializeUser(function(username, done){
-    console.log("deserialize");
     User.findOne({
         where: {
             username: username

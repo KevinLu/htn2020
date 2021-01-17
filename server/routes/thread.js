@@ -137,11 +137,9 @@ router.get("/threads", async (req, res) => {
     limit: limit,
   });
 
-  if (threads) {
-    return threads;
-  } else {
-    return "bad request";
-  }
+  console.log("thread req");
+
+  res.send(threads);
 });
 
 router.post("/new", async (req, res) => {
