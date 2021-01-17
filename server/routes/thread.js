@@ -57,7 +57,10 @@ router.get("/:id/comments", (req, res) => {
 router.post("/:id/comments", async (req, res) => {
   const threadId = req.params.id;
 
-  const userId = req.body.user;
+  var userId = null;
+  if (req.user) {
+    userId = req.user.uuid;
+  }
   const comment = req.body.comment;
   var mainThread = await Thread.findByPk(threadId);
 
@@ -86,7 +89,10 @@ router.post("/:id/comments", async (req, res) => {
 router.post("/:id/contributions", async (req, res) => {
   const threadId = req.params.id;
 
-  const userId = req.body.user;
+  var userId = null;
+  if (req.user) {
+    userId = req.user.uuid;
+  }
   const description = req.body.description;
   const file = req.body.fileUrl;
 
@@ -140,7 +146,10 @@ router.get("/threads", async (req, res) => {
 });
 
 router.post("/new", async (req, res) => {
-  const userId = req.body.user;
+  var userId = null;
+  if (req.user) {
+    userId = req.user.uuid;
+  }
   const title = req.body.title;
   const description = req.body.description;
   const dropbaseApi = req.body.dropbaseAPI;
