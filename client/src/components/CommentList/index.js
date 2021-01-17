@@ -15,7 +15,7 @@ function CommentList(props) {
 
     const threadId = props.threadId;
 
-    useEffect(() => {
+    function updateComments() {
         Axios.get("/api/thread/" + threadId + "/comments")
             .then(res => {
                 let newComments = [];
@@ -43,6 +43,10 @@ function CommentList(props) {
                     });
                 }
             })
+    }
+
+    useEffect(() => {
+        updateComments()
     }, []);
 
   return (
@@ -57,7 +61,7 @@ function CommentList(props) {
           Discussion
         </Text>
       </HStack>
-      <CommentBox threadId={threadId} />
+      <CommentBox updateComments={updateComments} threadId={threadId} />
       <VStack mt="3" spacing={4}>
           { comments.map(comment => {
               return <Comment key={comment.uuid} data={comment} />

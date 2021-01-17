@@ -22,6 +22,7 @@ function CommentBox(props) {
             .then(res => {
                 console.log("sent!");
                 setIsLoading(false);
+                props.updateComments();
             })
             .catch(err => {
                 setIsLoading(false);
