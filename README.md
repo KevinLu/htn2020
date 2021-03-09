@@ -1,8 +1,5 @@
 # crowd.data
 
-### Try it out
-https://crowddata.herokuapp.com/
-
 ## Inspiration
 
 In the current age of digital technology, data is everywhere. Machine learning and artificial intelligence researchers can ask the public for data to train models, and analysts can conduct market research for free! We want to develop a platform to allow users from anywhere contribute and compile data together! This allows for easy access of free crowd sourced data that anyone can contribute to.
